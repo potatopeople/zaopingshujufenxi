@@ -1,4 +1,4 @@
-package cn.adam.bigdata.zhaoping.bean;
+package cn.adam.bigdata.zhaoping.entity;
 
 import java.util.Objects;
 

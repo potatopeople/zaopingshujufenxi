@@ -1,23 +1,25 @@
 package cn.adam.bigdata.zhaoping.handle;
 
 import cn.adam.bigdata.zhaoping.basic.HandleTemp;
+import cn.adam.bigdata.zhaoping.entity.FieldMatch;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class FilterField extends HandleTemp {
 
-    private final String all = "[^\\x{4e00}-\\x{9fa5}|0-9|A-z]+";
-    private final String empty = "\\s+";
+    private final int[] x = {0, 6, 7, 8, 11};
 
     @Override
     public void handle(List<String> list) {
         for (int i = 0; i < list.size(); i++) {
-            list.set(i, work(list.get(i)));
+            boolean is = Arrays.binarySearch(x, i) >= 0;
+            list.set(i, work(list.get(i), is));
         }
     }
 
-    private String work(String s) {
-        return s.replaceAll(empty, " ")
-                .replaceAll("(^ | $)", "");
+    private String work(String s, boolean is) {
+        return s.replaceAll(FieldMatch.getEMPTY(), is ? "" : " ")
+                .replaceAll("(^ | $|\")", "");
     }
 }

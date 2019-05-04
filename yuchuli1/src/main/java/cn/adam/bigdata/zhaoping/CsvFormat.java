@@ -12,8 +12,8 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public class CsvFormat {
@@ -26,11 +26,11 @@ public class CsvFormat {
             File f = new File(url.toURI());
             files = f.listFiles((dir, name) -> name.endsWith(".csv"));
 
-            out = new File(url.getPath()+"out.csv");
+            out = new File(url.getPath()+"out/out.txt");
 
             handles = new Handle[]{
-                    new FilterField(),
-                    new CorrectionField()
+                    new FilterField()
+//                    new CorrectionField()
             };
         } catch (URISyntaxException e) {
             log.error("初始化时出错！", e);
@@ -50,12 +50,16 @@ public class CsvFormat {
 
         if (!out.exists()){
             try {
+                File outdir = out.getParentFile();
+                if (!outdir.exists())
+                    outdir.createNewFile();
                 out.createNewFile();
             } catch (IOException e) {
                 log.error("创建输出文件失败!", e);
                 return;
             }
-        }
+        }else
+            out.delete();
         try (Writer writer = new FileWriter(out)){
             CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
             for (File f : files) {
@@ -66,12 +70,22 @@ public class CsvFormat {
         }
     }
 
+    private boolean first = true;
     private void work(File f, CSVPrinter printer){
         log.info("处理文件: " + f.getName());
         try (Reader reader = new FileReader(f)) {
             CSVParser csvParser = new CSVParser(reader,CSVFormat.DEFAULT);
+
             for (CSVRecord record : csvParser) {
                 List<String> list = Utils.csvRecordToList(record);
+
+                if (first){
+                    printer.printRecord(list);
+                    first = false;
+                    continue;
+                }
+                if ("company_financing_stage".equals(list.get(0)))
+                    continue;
 
                 for (Handle handle : handles) {
                     handle.handle(list);
