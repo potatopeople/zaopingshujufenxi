@@ -14,7 +14,8 @@ import java.util.regex.Pattern;
 public class CorrectionField extends HandleTemp {
     @Override
     public void handle(List<String> list) {
-
+        cPeopleCorr(list);
+        cLocaltionCorr(list);
     }
 
     private void cPeopleCorr(List<String> list){
@@ -36,24 +37,24 @@ public class CorrectionField extends HandleTemp {
         }
     }
 
-    private void cPositionCorr(List<String> list){
-        int cp = find(list, FieldMatch.getCP());
-        int jedr = find(list, FieldMatch.getJEDR());
-        int jexr = find(list, FieldMatch.getJEXR());
-//        if (cp >= 0 && cp != 6 && ){
-//
-//        }
+    private void cLocaltionCorr(List<String> list){
+        Pattern p = Pattern.compile(FieldMatch.getCFS());
+        Matcher matcher = p.matcher(list.get(0));
+
+        if (!matcher.matches()){
+            if ((list.get(2) == null) || "".equals(list.get(2)))
+                list.set(2, list.get(0));
+
+            list.set(0, "");
+        }
     }
 
     private int find(List<String> list, String s){
-        return Collections.binarySearch(list, s, new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                int i = o1.compareTo(o2);
-                if (i == 0)
-                    return 0;
-                return Pattern.compile(o2).matcher(o1).matches() ? 0 : i;
-            }
+        return Collections.binarySearch(list, s, (o1, o2) -> {
+            int i = o1.compareTo(o2);
+            if (i == 0)
+                return 0;
+            return Pattern.compile(o2).matcher(o1).matches() ? 0 : i;
         });
     }
 }

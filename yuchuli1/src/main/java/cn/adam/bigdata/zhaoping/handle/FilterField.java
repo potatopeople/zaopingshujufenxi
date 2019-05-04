@@ -20,6 +20,6 @@ public class FilterField extends HandleTemp {
 
     private String work(String s, boolean is) {
         return s.replaceAll(FieldMatch.getEMPTY(), is ? "" : " ")
-                .replaceAll("(^ | $|\")", "");
+                .replaceAll("(^ | $)", "");
     }
 }

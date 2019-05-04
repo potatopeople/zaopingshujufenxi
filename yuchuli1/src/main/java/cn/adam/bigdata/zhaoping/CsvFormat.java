@@ -9,11 +9,11 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
+
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 public class CsvFormat {
@@ -24,13 +24,13 @@ public class CsvFormat {
             URL url = CsvFormat.class.getClassLoader().getResource(".");
             assert url != null;
             File f = new File(url.toURI());
-            files = f.listFiles((dir, name) -> name.endsWith(".csv"));
+            files = f.listFiles((dir, name) -> name.startsWith("job") && name.endsWith(".csv"));
 
-            out = new File(url.getPath()+"out/out.txt");
+            out = new File(url.getPath()+"out/ja.csv");
 
             handles = new Handle[]{
-                    new FilterField()
-//                    new CorrectionField()
+                    new FilterField(),
+                    new CorrectionField()
             };
         } catch (URISyntaxException e) {
             log.error("初始化时出错！", e);
@@ -50,16 +50,16 @@ public class CsvFormat {
 
         if (!out.exists()){
             try {
-                File outdir = out.getParentFile();
-                if (!outdir.exists())
-                    outdir.createNewFile();
-                out.createNewFile();
+                File outDir = out.getParentFile();
+                if (!outDir.exists()) {
+                    outDir.createNewFile()
+                }
+                out.createNewFile()
             } catch (IOException e) {
                 log.error("创建输出文件失败!", e);
                 return;
             }
-        }else
-            out.delete();
+        }
         try (Writer writer = new FileWriter(out)){
             CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
             for (File f : files) {

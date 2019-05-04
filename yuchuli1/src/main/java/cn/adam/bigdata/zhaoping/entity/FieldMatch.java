@@ -1,18 +1,18 @@
 package cn.adam.bigdata.zhaoping.entity;
 
-import lombok.Getter;
-
 public class   FieldMatch {
     private static final String ALL = "[\\x{4e00}-\\x{9fa5}|0-9|A-z]+";
+    private static final String ALLBD = "[\\x{4e00}-\\x{9fa5}|0-9|A-z]+";
     private static final String EMPTY = "\\s+";
 
-    private static final String CFS = "^(A轮|B轮|C轮|D轮及以上|上市公司|不需要融资|天使轮|未融资)$";
+    private static final String CFS = "^(战略投资|已上市|其他|IPO上市|A轮|B轮|C轮|D轮(及以上)?" +
+            "|上市公司|不需要融资|天使轮|未融资)$";
     private static final String CI = "^(" + ALL + "[,|/]?" + ")+$";
     private static final String CL = null;
     private static final String CN = null;
     private static final String CNA = null;
     private static final String CO = null;
-    private static final String CP = "^(公司规模：)?(\\d+人?(-|以上)?){1,2}$";
+    private static final String CP = "^(公司规模：)?((少于)?\\d+人?(－|-|以上|以下)?|保密){1,2}$";
     private static final String JEDR = "^(学历：?)?((统招)?(MBA|不限|博士|博士后|大专|本科|" +
             "硕士|中专|中技|初中)+(及以下|及以上)?/*)+$";
     private static final String JEXR = "^(经验：?)*(不限|应届(毕业)?生|" +

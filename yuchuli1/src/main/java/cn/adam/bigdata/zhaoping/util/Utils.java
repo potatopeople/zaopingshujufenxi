@@ -4,7 +4,6 @@ import cn.adam.bigdata.zhaoping.entity.Null;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVRecord;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -76,7 +75,6 @@ public class Utils {
      * @return 返回结果
      */
     public static Object invoke(Object o, String m) throws Exception {
-        Method method = o.getClass().getMethod(m);
         return invoke(o, m, new Class[0], new Object[0]);
     }
     public static Object invoke(Object o, String m, Class c, Object os) throws Exception {
