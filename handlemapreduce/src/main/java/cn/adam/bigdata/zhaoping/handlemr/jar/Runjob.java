@@ -1,6 +1,6 @@
 package cn.adam.bigdata.zhaoping.handlemr.jar;
 
-import cn.adam.bigdata.zhaoping.handlemr.RunMapReduce;
+import cn.adam.bigdata.zhaoping.entity.FieldMatch;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -18,7 +18,7 @@ public class Runjob {
 
 		boolean is = false;
 		for (String s : args){
-			if (RunMapReduce.getCONF().equals(s)){
+			if (FieldMatch.CONF.equals(s)){
 				is = true;
 				continue;
 			}

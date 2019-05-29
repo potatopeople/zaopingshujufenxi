@@ -1,6 +1,6 @@
 package cn.adam.bigdata.zhaoping;
 
-import cn.adam.bigdata.zhaoping.basic.Handle;
+import cn.adam.bigdata.zhaoping.basic.FieldHandle;
 import cn.adam.bigdata.zhaoping.handle.CorrectionField;
 import cn.adam.bigdata.zhaoping.handle.FilterField;
 import cn.adam.bigdata.zhaoping.util.Utils;
@@ -28,7 +28,7 @@ public class CsvFormat {
 
             out = new File(url.getPath()+"out/ja.csv");
 
-            handles = new Handle[]{
+            fieldHandles = new FieldHandle[]{
                     new FilterField(),
                     new CorrectionField()
             };
@@ -40,7 +40,7 @@ public class CsvFormat {
 
     private static File[] files;
     private static File out;
-    private static Handle[] handles;
+    private static FieldHandle[] fieldHandles;
 
     public static void main(String[] args) {
         log.info("开始处理!");
@@ -52,9 +52,9 @@ public class CsvFormat {
             try {
                 File outDir = out.getParentFile();
                 if (!outDir.exists()) {
-                    outDir.createNewFile()
+                    outDir.mkdir();
                 }
-                out.createNewFile()
+                out.createNewFile();
             } catch (IOException e) {
                 log.error("创建输出文件失败!", e);
                 return;
@@ -65,6 +65,8 @@ public class CsvFormat {
             for (File f : files) {
                 csv.work(f, printer);
             }
+
+            log.info("处理完成，输出文件："+out.getPath());
         } catch (IOException e) {
             log.error("输错流出错！", e);
         }
@@ -87,8 +89,8 @@ public class CsvFormat {
                 if ("company_financing_stage".equals(list.get(0)))
                     continue;
 
-                for (Handle handle : handles) {
-                    handle.handle(list);
+                for (FieldHandle fieldHandle : fieldHandles) {
+                    fieldHandle.handle(list);
                 }
 
                 printer.printRecord(list);

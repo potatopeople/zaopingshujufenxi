@@ -1,17 +1,16 @@
 package cn.adam.bigdata.zhaoping.handle;
 
-import cn.adam.bigdata.zhaoping.basic.HandleTemp;
+import cn.adam.bigdata.zhaoping.basic.FieldHandleTemp;
 import cn.adam.bigdata.zhaoping.entity.FieldMatch;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Slf4j
-public class CorrectionField extends HandleTemp {
+public class CorrectionField extends FieldHandleTemp {
     @Override
     public void handle(List<String> list) {
         cPeopleCorr(list);
@@ -19,7 +18,7 @@ public class CorrectionField extends HandleTemp {
     }
 
     private void cPeopleCorr(List<String> list){
-        Pattern p = Pattern.compile(FieldMatch.getCP());
+        Pattern p = Pattern.compile(FieldMatch.CP);
         Matcher matcher = p.matcher(list.get(0));
         if (matcher.matches()){
             if ((list.get(1) != null) && list.get(1).equals(list.get(6)))
@@ -38,7 +37,7 @@ public class CorrectionField extends HandleTemp {
     }
 
     private void cLocaltionCorr(List<String> list){
-        Pattern p = Pattern.compile(FieldMatch.getCFS());
+        Pattern p = Pattern.compile(FieldMatch.CFS);
         Matcher matcher = p.matcher(list.get(0));
 
         if (!matcher.matches()){

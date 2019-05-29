@@ -1,6 +1,6 @@
 package cn.adam.bigdata.zhaoping.check;
 
-import cn.adam.bigdata.zhaoping.basic.HandleTemp;
+import cn.adam.bigdata.zhaoping.basic.FieldHandleTemp;
 import cn.adam.bigdata.zhaoping.entity.FieldMatch;
 import lombok.extern.slf4j.Slf4j;
 
@@ -9,10 +9,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Slf4j
-public class FieldCheck extends HandleTemp {
+public class FieldCheck extends FieldHandleTemp {
     @Override
     public void handle(List<String> list) {
-        String[] all = FieldMatch.getAllFieldMatch();
+        String[] all = FieldMatch.AllFieldMatch;
         for (int i = 0; i < list.size(); i++) {
             String p = all[i];
             if (p == null)
