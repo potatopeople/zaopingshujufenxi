@@ -1,0 +1,14 @@
+company_financing_stage
+company_industry
+company_location
+company_name
+company_nature
+company_overview
+company_people
+job_edu_require
+job_exp_require
+job_info
+job_name
+job_salary
+job_tag
+job_welfare

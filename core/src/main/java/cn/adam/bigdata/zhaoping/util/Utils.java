@@ -2,22 +2,159 @@ package cn.adam.bigdata.zhaoping.util;
 
 import cn.adam.bigdata.zhaoping.entity.Null;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
+import java.io.DataInput;
+import java.io.DataOutput;
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.function.Predicate;
 
 @Slf4j
 public class Utils {
+
+    public static CSVRecord csvstrToCSVRecord(String csvstr, CSVFormat format) {
+        CSVRecord record = null;
+        try {
+            CSVParser parse = CSVParser.parse(csvstr, format);
+            Iterator<CSVRecord> iterator = parse.iterator();
+            if (iterator.hasNext())
+                record = iterator.next();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return record;
+    }
+
+    public static String objectToCsvstr(Object o, CSVFormat format) {
+        StringBuffer sb = new StringBuffer();
+
+        Iterable i = null;
+        if (equalsClassAFromB(o.getClass(), Iterable.class) > 0){
+            i = (Iterable) o;
+        }else {
+            String[] sss = format.getHeader();
+            if (sss != null && sss.length == 0)
+                sss = null;
+            i = objectToList(o, sss);
+        }
+
+        try {
+            CSVPrinter printer = new CSVPrinter(sb, format);
+
+            printer.printRecord(i);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
+
+    public static List<Object> objectToList(Object o, String[] ss){
+        List list = null;
+        Object[] os = new Object[ss.length];;
+        if (ss == null)
+            list = new ArrayList<>();
+
+        if (equalsClassAFromB(o.getClass(), Map.class) > 0){
+            Map<Object, Object> m = (Map) o;
+            if (ss == null)
+                list.addAll(m.values());
+            else {
+                Collection<Object> set = m.values();
+//                list = new ArrayList(set.size());
+//                list = new ArrayList(ss.length);
+                for (Map.Entry e : m.entrySet()) {
+                    int index = 0;
+                    if ((index = Arrays.binarySearch(ss, e.getKey())) >= 0) {
+//                        list.set(index, e.getValue());
+                        os[index] = e.getValue();
+                    }
+                }
+            }
+        }else {
+            Class clazz = o.getClass();
+            Field[] declaredFields = clazz.getDeclaredFields();
+            if (ss == null){
+//                list = new ArrayList();
+                for (Field f : declaredFields) {
+                    f.setAccessible(true);
+                    try {
+                        list.add(f.get(o));
+                    } catch (IllegalAccessException e) {log.error("出错！", e);}
+                }
+            }else {
+
+//                list = new ArrayList(declaredFields.length);
+                for (Field f : declaredFields) {
+                    f.setAccessible(true);
+                    int index = 0;
+                    if ((index = Arrays.binarySearch(ss, f.getName())) >= 0) {
+                        try {
+//                            list.set(index, f.get(o));
+                            os[index] = f.get(o);
+                        } catch (IllegalAccessException e) {
+                            log.error("出错！", e);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (ss != null)
+            list = Arrays.asList(os);
+        return list;
+    }
+
+    public static Object mapToObject(Map<String, ?> map, Object o) {
+        Class clazz = o.getClass();
+        try {
+            for (Map.Entry<String, ?> e : map.entrySet()) {
+                Field declaredField = clazz.getDeclaredField(e.getKey());
+                declaredField.setAccessible(true);
+                declaredField.set(o, e.getValue());
+            }
+        } catch (Exception e) {
+            log.error("实例赋值出错！", e);
+        }
+        return o;
+    }
+
+    public static void writeDataOutput(DataOutput dataOutput, Object o) {
+        Class clazz = o.getClass();
+        Field[] declaredFields = clazz.getDeclaredFields();
+        for (Field f: declaredFields) {
+            f.setAccessible(true);
+            try {
+                dataOutput.writeUTF(f.get(o).toString());
+            } catch (Exception e) {
+                log.error("序列化写出出错！",e);
+            }
+        }
+    }
+    public static void readDataInput(DataInput dataInput, Object o) {
+        Class clazz = o.getClass();
+        Field[] declaredFields = clazz.getDeclaredFields();
+        for (Field f: declaredFields) {
+            f.setAccessible(true);
+            try {
+                f.set(o, dataInput.readUTF());
+            }  catch (Exception e) {
+                log.error("序列化读取出错！",e);
+            }
+        }
+    }
 
     /**
      * 将CSVRecord转为List
      * @param record 传入CSVRecord
      * @return 返回ArrayList
      */
-    public static List<String> csvRecordToList(CSVRecord record){
+    public static List<String> csvstrRecordToList(CSVRecord record){
         Iterator<String> iterator = record.iterator();
         List<String> list = new ArrayList<>();
         while (iterator.hasNext()){
@@ -52,13 +189,17 @@ public class Utils {
                     list.add(invoke(i.next(), mn));
             }
 
+            if (list.size() <= 0)
+                return null;
+
             if (isCollection){
                 return list;
             } else{
-                StringBuilder sb = new StringBuilder(list.get(0).toString());
-                for (int i = 1; i < list.size(); i++){
-                    sb.append(s).append(list.get(i));
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < list.size(); i++){
+                    sb.append(list.get(i)).append(s);
                 }
+                sb.deleteCharAt(sb.length()-1);
                 return sb.toString();
             }
 
@@ -107,8 +248,9 @@ public class Utils {
      * @param b 传入class对象
      * @return 返回结果
      */
-    public static Integer equalsClassAFromB(Class a, Class b){
-        return equalsClass(a, b, 0, 1);
+    public static int equalsClassAFromB(Class a, Class b){
+        Integer i = equalsClass(a, b, 0, 1);
+        return i == null ? -1 : i;
     }
 
     /**
@@ -118,8 +260,9 @@ public class Utils {
      * @param b 传入class对象
      * @return 返回结果
      */
-    public static Integer equalsClassBFromA(Class a, Class b){
-        return equalsClass(b, a, 0, 1);
+    public static int equalsClassBFromA(Class a, Class b){
+        Integer i = equalsClass(b, a, 0, 1);
+        return i == null ? -1 : i;
     }
 
     private static Integer equalsClass(Class a, Class b, int index, int step){
@@ -134,7 +277,7 @@ public class Utils {
         if (re != null)
             return re;
 
-        Class[] ccs = c.getInterfaces();
+        Class[] ccs = a.getInterfaces();
         for (Class cc : ccs) {
             re = equalsClass(cc, b, index+step, step);
             if (re != null)

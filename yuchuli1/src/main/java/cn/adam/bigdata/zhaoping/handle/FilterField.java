@@ -6,7 +6,7 @@ import cn.adam.bigdata.zhaoping.entity.FieldMatch;
 import java.util.Arrays;
 import java.util.List;
 
-public class FilterField extends FieldHandleTemp {
+public class FilterField extends FieldHandleTemp<List<String>> {
 
     private final int[] x = {0, 6, 7, 8, 11};
 

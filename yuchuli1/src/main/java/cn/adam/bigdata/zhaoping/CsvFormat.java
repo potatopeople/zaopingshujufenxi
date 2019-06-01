@@ -79,7 +79,7 @@ public class CsvFormat {
             CSVParser csvParser = new CSVParser(reader,CSVFormat.DEFAULT);
 
             for (CSVRecord record : csvParser) {
-                List<String> list = Utils.csvRecordToList(record);
+                List<String> list = Utils.csvstrRecordToList(record);
 
                 if (first){
                     printer.printRecord(list);

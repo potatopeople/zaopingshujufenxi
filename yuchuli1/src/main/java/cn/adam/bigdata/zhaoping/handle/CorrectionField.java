@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Slf4j
-public class CorrectionField extends FieldHandleTemp {
+public class CorrectionField extends FieldHandleTemp<List<String>> {
     @Override
     public void handle(List<String> list) {
         cPeopleCorr(list);

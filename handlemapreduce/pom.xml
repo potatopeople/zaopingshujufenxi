@@ -175,7 +175,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>cn.adam.bigdata.zhaoping.handlemr.jar.Runjob</mainClass>
+                                    <mainClass>cn.adam.bigdata.zhaoping.handlemr.jar.fieldhandle.Runjob</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
@@ -184,6 +184,18 @@
             </plugin>
 
         </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.txt</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
     </build>
 
 </project>

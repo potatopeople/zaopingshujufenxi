@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Slf4j
-public class FieldCheck extends FieldHandleTemp {
+public class FieldCheck extends FieldHandleTemp<List<String>> {
     @Override
     public void handle(List<String> list) {
         String[] all = FieldMatch.AllFieldMatch;

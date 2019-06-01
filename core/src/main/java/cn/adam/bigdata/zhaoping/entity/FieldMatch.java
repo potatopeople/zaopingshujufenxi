@@ -27,6 +27,11 @@ public class   FieldMatch {
             CFS,CI,CL,CN,CNA,CO,CP,JEDR,JEXR,JI,JN,JS,JT,JW
     };
 
+    public static final String INT = "\\d+";
+    public static final String DOUBLE = "[\\d.]+";
+    public static final String EDU = "(初中|中专|中技|中职|职高|高中|大专|高职|本科|硕士|博士|学历不限)";
+    public static final String EDU2 = "(初中|中专|中技|中职|职高|高中|大专|高职|本科|硕士|MBA|博士|博士后|其他|不限)";
+
     public final static String CONF = "adam.conf";
     public final static String JAR = "mapred.jar\tD:\\data\\code\\idea\\zaopingshujufenxi" +
             "\\handlemapreduce\\target\\handlemapreduce-1.0-SNAPSHOT.jar";

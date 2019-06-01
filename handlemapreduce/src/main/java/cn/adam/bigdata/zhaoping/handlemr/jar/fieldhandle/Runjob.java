@@ -1,6 +1,7 @@
-package cn.adam.bigdata.zhaoping.handlemr.jar;
+package cn.adam.bigdata.zhaoping.handlemr.jar.fieldhandle;
 
 import cn.adam.bigdata.zhaoping.entity.FieldMatch;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -12,6 +13,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.IOException;
 
+@Slf4j
 public class Runjob {
 	public static void main(String[] args) {
 		Configuration configuration = new Configuration();
@@ -40,8 +42,10 @@ public class Runjob {
 			job.setMapOutputKeyClass(Text.class);
 			job.setMapOutputValueClass(IntWritable.class);
 
-			FileInputFormat.addInputPath(job, new Path("hdfs:/drsn/test/input/test_text.txt"));
-			Path out = new Path("hdfs:/drsn/test/output");
+//			FileInputFormat.addInputPath(job, new Path("hdfs:/drsn/test/input/test_text.txt"));
+//			Path out = new Path("hdfs:/drsn/test/output");
+			FileInputFormat.addInputPath(job, new Path("F:\\rjb\\input\\ja.csv"));
+			Path out = new Path("F:\\rjb\\output");
 			if (fs.exists(out)) {
 				fs.delete(out, true);
 			}
@@ -51,16 +55,10 @@ public class Runjob {
 			if (f) {
 				System.out.println("sucssec");
 			}
-		} catch (IOException e) {
+		} catch (IOException | ClassNotFoundException | InterruptedException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("mapreduce执行出错！", e);
 		}
-		
+
 	}
 }

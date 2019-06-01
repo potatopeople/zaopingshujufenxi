@@ -1,0 +1,578 @@
+AngularJS	angular=angularjs
+OpenGLES	opengles
+Q-learning	q-learning
+Gulp.js	gulp=gulpjs
+Verilog HDL	verilog hdl=verilog-hdl=verilog
+CDH	cdh
+LVS	lvs
+Visual SLAM	visual slam
+GLM	glm
+Chatbot	chatbot
+CDN	cdn
+Erlang	erlang
+ABAP	abap
+PyTorch	pytorch
+LLVM	llvm
+Docker	docker
+FreeRTOS	freertos
+图像处理	图像处理
+MySQL	mysql
+Verilog	verilog
+Pinterest	pinterest
+SDN	sdn
+React.js	react=reactjs
+Ensemble learning	ensemble
+RBM	rbm
+ERWin	erwin
+JSP	jsp
+GMM	gmm
+Microsoft Office	microsoft office=office=ms office
+Code Review	code review
+Apache	apache
+Vulkan	vulkan
+AR	ar
+Nagios	nagios
+HPC	hpc
+SEM	sem
+Keras	keras
+SEO	seo
+CNTK	cntk
+Keil	keil
+CFD	cfd
+C#	c#=c sharp
+Transact-SQL	transact sql=transactsql=transact-sql
+KVM	kvm
+C	c
+Classification算法	classification
+Greenplum	greenplum
+Embedding	embedding
+GNU	gnu
+R	r
+NoSQL	nosql
+RDF	rdf
+Boost	boost
+人工智能	人工智能
+Tornado	tornado
+数据挖掘	ssas=data mining=text mining=数据挖掘
+Clustering算法	clustering
+TensorFlow	tensorflow=tensoflow=tensor flow
+维特比算法	维特比算法=viterbi
+XPath	xpath
+EKF	ekf
+HQL	hql
+SLAM	slam
+朴素贝叶斯分类法	naivebayes
+CH	ch
+SPSS Clementine	spss clementine
+Apache Mesos	mesos
+ISP	isp
+ACL	acl
+Delphi	delphi=object pascal
+UKF算法	ukf
+Adobe LR	lr
+DIV	div
+CUDA	cuda
+SGD	sgd
+SRILM	srilm
+Python Web	python web
+DataStage	datastage
+Layout	layout
+Listing	listing
+Tacotron	tacotron
+LSDSLAM算法	lsd-slam
+Socket	socket
+JVK	jvm
+ActionScript	actionscript
+Ada	ada
+CATIA	catia
+ITK	itk
+Attention Model	attentionmodel=attention model=attention-model
+ELK	elk
+DL	dl
+GPS	gps
+WPF	wpf
+OpenNI	openni
+NumPy	numpy
+Protel	protel
+InDesign	indesign
+Mask RCNN	mask-rcnn
+Unreal	unreal
+F#	f#
+BGD	bgd
+Lisp	lisp
+SCADA	scada
+WPS Office	wps
+X-Accel	x-accel=accel-x
+Spring MVC	spring mvc=springmvc
+GraphLab	graphlab
+OpenMP	openmp
+RandomForest	random forest
+Stata	stata
+Visual Studio	visualstudio=vs=visual studio
+Impala	impala
+AES	aes
+PCA	pca
+Udesk	udesk
+Linux	linux
+UML	uml
+MicroStrategy	microstrategy
+贝叶斯算法	bayes
+Netty	netty
+PCL	pcl
+Apache OpenNLP	apache opennlp=opennlp=apacheopennlp
+MongoDB	mongo=mongdb=mangodb=mongodb
+Qlik	qlik
+MIPS	mips
+Bagging	bagging
+HTK	htk
+WebRTC	webrtc
+v-SLAM	v-slam=v slam=vslam
+FineReport	finereport
+Tomcat	tomcat
+计算机视觉	机器视觉=computer vision
+OpenStack	openstack
+JSON	json
+Spark MLlib	mllib=sparkmllib=spark mllib=mlib=spark ml
+ASIC	asic
+Scratch	scratch
+Visual Basic	vb
+JUnit	junit
+UCOS	ucos
+OKVIS	okvis
+Mathematica	mathematica
+ANSYS	ansys
+Adobe After Effects	ae
+Oracle	orcale=oralce
+人脸识别	人脸识别
+Adaboost	adaboost
+Streaming	streaming
+C++	c++=c+
+NB-IoT	nb-iot
+LightGBM	lightgbm
+DMP	dmp
+LiDAR	lidar
+Reinforcement Learning	reinforcement learning
+Microsoft Word	word
+Teradata	teradata
+Weka	weka
+WebSocket	websocket
+GBDT算法	gdbt
+Apache Kudu	kudu
+Aerosolve	aerosolve
+Heritrix	heritrix
+Kaldi	kaldi
+XHTML	xhtml
+Photoshop	ps=photoshop
+AutoEncoder	autoencoder
+OCR	ocr
+Maven	maven
+Caffee	caffee
+Cassandra 	cassandra
+DNN	dnn
+PySpark	pyspark
+Access	access
+Hash	hash
+MATLAB fft	fft
+Minitab	minitab
+PTAM	ptam
+SIFT算法	sift
+MBGD	mbgd
+Bokeh	bokeh
+Haskell	haskell
+RESTful	restful
+Faster RCNN	faster-rcnn=faster rcnn
+DOM	dom
+Microsoft Project	project
+Solr	solr
+IO	io
+Eviews	eviews
+CMS	cms
+TOF	tof
+决策树	决策树
+CNC	cnc
+Axure RP	axure rp=axurerp=axure
+Swift	swift
+WinForm	winform=window form
+ENVI	envi
+SolidWorks	solidworks
+Kibana	kibana
+FTP	ftp
+SPSS Modeler	spss modeler
+PySpider	pyspider
+WebService	webservice
+VTK	vtk
+ParameterServer	parameter server
+EtherCAT	ethercat
+SCARA	scara
+数据分析	数据分析
+Phm	phm
+RDBMS	rdbms
+WFST	wfst
+PHP	php
+JSoup	jsoup
+SPSS	spss=spass
+DQN	dqn
+ArcGIS	arcgis
+SOA	soa
+Adams	adams
+Sass	sass
+PLSA	plsa
+RabbitMQ	mq=rabbitmq
+Adobe Illustrator	ai=illustrator
+Sphinx	sphinx
+OpenCV	opencv
+Django	django
+PDCA	pdca
+Apache Thrift	thrift
+Analytics.js	analytics=analyticsjs
+VSLAM	vslam
+Dijkstra算法	dijkstra
+OpenCL	opencl
+EasyUI	easyui
+Golang	golang=go
+Unix	unix
+导航算法	导航算法
+K-Means	kmeans
+SPC	spc
+Apriori算法	apriori
+Spring Boot	spring boot=springboot
+Word Embedding	word embedding=word-embedding=wordembedding
+Fortran	fortran
+推荐算法	算法优化=推荐算法
+Swarm	swarm
+Sklearn	sklearn
+RNN	rnn
+Cafee	cafee
+MDP	mdp
+Microsoft Azure	azure
+Oozie	oozie
+Selenium	selenium
+LBS	lbs
+Less	less
+Kernel	kernel
+Ubuntu	ubuntu
+DSP	dsp
+DSO	dso
+Matplotlib	matplotlib
+Scrapy	scrapy
+Hibernate	hibernate
+GNSS	gnss
+Octave	octave
+Node.js	node=nodejs
+Android	androidsdk=android
+PKI	pki
+Jenkins	jenkins
+Kettle	kettle
+JavaEE	java ee=javaee
+CRF	crf
+ROS	ros
+Raft算法	raft
+MES	mes
+Caffe	caffe
+CentOS	centos
+ANN	ann
+RPA	rpa
+FFmpeg	ffmpeg
+PLC	plc
+LDA	lda
+IPTV	iptv
+MFC	mfc
+TypeScript	typescript=ts
+PLM	plm
+R-CNN	r-cnn
+TTS	tts
+Neon	neon
+Elasticsearch	elastic search=elasticsearch
+Clementine	clementine
+XGBoost	xgboost
+QNX	qnx
+Ruby	ruby
+Framework	framework
+ZigBee	zigbee
+AOP	aop
+CSS	css
+WinCE	wince
+Ceph	ceph
+Scala	scala
+OpenGL	opengl
+VoIP	voip
+GDAL	gdal
+UART	uart
+SSH	ssh
+Redis	redis
+SSM	ssm
+Logo	logo
+ORB-SLAM	orb-slam=orbslam=orb slam
+Apache Mahout	mahout
+GoogLeNet	googlenet
+HTML5	html5
+自然语言	自然语言
+LAMP	lamp
+Microsoft Excel	excel=execl=excle
+MyEclipse	myeclipse
+Origin	origin
+APP	app
+PACS	pacs
+JavE	jave
+PostgreSQL	postgresql
+PBFT算法	pbft
+Jquery	jquery
+SQLite	sqlite
+MyBatis	mybatis
+Kylin	kylin
+Pascal	pascal
+BSP	bsp
+GMapping	gmapping
+Cookie	cookie
+POC	poc
+深度学习	deeplearning=深度学习
+GlusterFS	glusterfs
+Dubbo	dubbo
+Flume	flume
+POI	poi
+CorelDRAW	coreldraw
+Spring	spring
+Sybase	sybase
+Zabbix	zabbix
+AdWords	adwords
+Logistic regression	logistic regression
+Presto	presto
+DeepMind	deepmind
+RSS	rss
+建模分析	建模分析
+Stateflow	stateflow
+Struts	struts
+Linux C	linux c
+CVR	cvr
+大数据	大数据
+Bluetooth	bluetooth
+Qt	qt
+SVG	svg
+NLG	nlg
+RTK	rtk
+SegNet	segnet
+Halcon	halcon
+SVN	svn
+SIMD	simd
+Random Forest随机森林	随机森林=randomforest
+NLP	nlp
+NLU	nlu
+ConvNet	convnet
+ASM	asm
+DDoS	ddos
+Paxos算法	paxos
+ASP	asp
+Ajax	ajax
+LibSvm	libsvm
+ASR	asr
+Kalman	kalman
+Java	java
+LSTM	lstm
+Power BI	powerbi
+COBOL	cobol
+SQL Server	sql-sever=sqlserver=sqlsever=sql sever=mssql=sql server
+ActiveMQ	activemq
+ARIMA	arima
+SciKit-Learn	sk-learn=scikit-learn=sklearn
+Apache Kafka	kafka=kafaka
+Jupyter	jupyter
+Spark	spark
+Apache Ambari	ambari
+Axure	axure
+VMware	vmware
+PRD	prd
+Scheme	scheme
+HiveSql	hive sql
+LNMP	lnmp
+RSA算法	rsa
+Web service	webservice=web service
+目标检测	目标检测
+ReID	reid
+Dreamweaver	dreamweaver
+GBDT	gbdt
+Simulink	simulink
+Lucene	lucene
+TensorRT	tensorrt
+MapReduce	mapreduce
+IDL	idl
+VHDL	vhdl
+机器学习	机器学习=machine learning
+.NET	.net
+Gabor	gabor
+Learning to Rank算法	learningtorank
+Canvas	canvas
+Attention	attention
+优化算法	优化算法
+Boosting	boosting
+TalkingData	talkingdata
+语音识别	语音识别
+HCI	hci
+CSS3	css3
+ECharts	echarts
+Theano	theano
+Apache Pig	pig
+GAN	gan
+PLSQL	plsql
+ODPS	odps
+VR	vr
+Stanford NLP	stanfordnlp
+VisionPro	visionpro
+Microsoft Power BI	power bi
+SpringMVC	springmvc
+BASH	bash
+ORM	orm
+eCos	e-cos=ecos
+Laravel	laravel
+NewSQL	newsql
+GMM-HMM	hmmgmm=hmm gmm=hmm-gmm
+Shell	shell
+AWK	awk
+JavaScript	js=javascript
+WebMagic	webmagic
+JDBC	jdbc
+Bootstrap	bootstrap
+Scrum	scrum
+AIOps	aiops
+AWS	aws
+PaddlePaddle	paddlepaddle=paddle
+ABTest	abtest
+HDFS	hdfs
+OLAP	olap
+Logistic	logistic
+Jboss	jboss
+VAD	vad
+AlexNet	alexnet
+VAE	cae
+Encoder-Decoder	encoder-decoder
+Jetty	jetty
+OTA	ota
+LabVIEW	labview
+ImageNet	imagenet
+MQTT	mqtt
+Nginx	nginx
+GDB	gdb
+CMake	cmake
+FPGA	fpga
+Eclipse	eclipse
+MPI	mpi
+MPP	mpp
+JavaWeb	java web
+MATLAB	matlab
+ExtJS	extjs
+GPGPU	gpgpu
+Druid	druid
+VBA	vba
+Fast R-CNN	fast-rcnn
+Coding	coding
+WebSphere	websphere
+MaxCompute	maxcompute
+DAPP	dapp
+SciPy	scipy
+Perl	perl
+Logstash	logstash
+Spring Cloud	springcloud=spring cloud
+HBase	hbase
+YOLO	yolov
+FCN	fcn
+Idea	idea
+Python NLTK	nltk
+KNN	knn
+Yarn	yarn
+Objective-C	objective-c=oc=obj-c=objc
+Servlet	servlet
+Spark ML	spark-ml
+GitLab	gitlab
+云计算	云计算
+RDMA	rdma
+Pattern	pattern
+Decision Tree	decisiontree=decision tree=decision-tree
+PowerDesigner	powerdesigner
+IaaS	iaas
+SparkSQL	sparksql=spark sql
+LDPC算法	ldpc
+AI lab	ai lab
+JMP	jmp
+RocketMQ	rocketmq
+Pipeline	pipeline
+人脸检测	人脸检测
+WebLogic	weblogic
+ZooKeeper	zookeeper
+GraphX	graphx
+PredictionIO	predictionio
+Model	model
+Apache JMeter	jmeter
+Seaborn	seaborn
+Webpack	webpack
+RGB-D	rgb-d=rgb d
+RTOS	rtos
+JNI	jni
+Visual C++	visual c++=visual c=vc++=vc
+HTML	htm=html
+Groovy	groovy
+VINS	vins
+CGAL	cgal
+ThinkPHP	thinkphp
+Sqoop	sqoop
+MXNet	mxnet
+RCNN	rcnn
+Benchmark	benchmark
+Maya	maya
+CMMI	cmmi
+LoadRunner	loadrunner
+LSA	lsa
+Assembly	assembly
+Python	python=phython=pyhton
+数学建模	数学建模
+SVO算法	svo
+贝叶斯分类算法	bayesian=贝叶斯
+CAD	cad
+OpenGL ES	opengl es
+SSIS	ssis
+CAM	cam
+信号处理	信号信息处理=信号处理
+R-FCN	r-fcn
+GIS	gis
+Vue.js	vuejs
+Hive	hive
+N-gram	n-gram
+DevOps	devops
+Git	git
+Unity	unity
+POMDP	pomdp
+Ansible	ansible
+VGG	vgg
+MVC	mvc
+LTE	lte
+SAS EM	sas em
+Adobe Premiere	pr
+Category	category
+SAS	sas
+SAR	sar
+AutoCAD	autocad
+LTP	ltp
+并行算法	并行算法
+Spark Streaming	spark streaming=sparkstreaming=spark-streaming
+gRPC	grpc
+IoT	iot
+CMOS	cmos
+TDD	tdd
+Spark GraphX	graphx
+Lua	lua
+Flash	flash
+Flask	flask
+Lookalike算法	lookalike
+Dlib	dlib
+HMI	hmi
+Regression	regression
+HMM	hmm
+IOS	ios
+Apache Hadoop	hadoop
+PowerPoint	ppt=power point=powerpoint
+AUTOSAR	autosar
+Eigen	eigen
+REST	rest
+XML	xml
+ModelSim	modelsim
+SCM	scm
+Memcached	memcached=memcache
+Kubernetes	kubernetes
