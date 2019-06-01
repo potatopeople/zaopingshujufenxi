@@ -1,8 +1,8 @@
 package cn.adam.bigdata.zhaoping;
 
-import cn.adam.bigdata.zhaoping.basic.FieldHandle;
-import cn.adam.bigdata.zhaoping.handle.CorrectionField;
-import cn.adam.bigdata.zhaoping.handle.FilterField;
+import cn.adam.bigdata.zhaoping.basic.Handle;
+import cn.adam.bigdata.zhaoping.handle.Correction;
+import cn.adam.bigdata.zhaoping.handle.Filter;
 import cn.adam.bigdata.zhaoping.util.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
@@ -28,9 +28,9 @@ public class CsvFormat {
 
             out = new File(url.getPath()+"out/ja.csv");
 
-            fieldHandles = new FieldHandle[]{
-                    new FilterField(),
-                    new CorrectionField()
+            handles = new Handle[]{
+                    new Filter(),
+                    new Correction()
             };
         } catch (URISyntaxException e) {
             log.error("初始化时出错！", e);
@@ -40,7 +40,7 @@ public class CsvFormat {
 
     private static File[] files;
     private static File out;
-    private static FieldHandle[] fieldHandles;
+    private static Handle[] handles;
 
     public static void main(String[] args) {
         log.info("开始处理!");
@@ -89,8 +89,8 @@ public class CsvFormat {
                 if ("company_financing_stage".equals(list.get(0)))
                     continue;
 
-                for (FieldHandle fieldHandle : fieldHandles) {
-                    fieldHandle.handle(list);
+                for (Handle handle : handles) {
+                    handle.handle(list);
                 }
 
                 printer.printRecord(list);

@@ -1,6 +1,6 @@
 package cn.adam.bigdata.zhaoping.handlemr.jar.handle;
 
-import cn.adam.bigdata.zhaoping.basic.FieldHandleTemp;
+import cn.adam.bigdata.zhaoping.basic.HandleTemp;
 import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
 import cn.adam.bigdata.zhaoping.util.Utils;
 import lombok.extern.slf4j.Slf4j;
@@ -14,15 +14,15 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 @Slf4j
-public class WordFieldHandle extends FieldHandleTemp<JobWritable> {
+public class WordHandle extends HandleTemp<JobWritable> {
 
     private static final String IT = "userDefineIT";
     private static final String WEL = "userDefineWEL";
     private static final Map<String, String> ITWORDS = new HashMap<>();
     private static final Set<String> WELWORDS = new HashSet<>();
     static {
-        File itfile = new File(WordFieldHandle.class.getResource("it.txt").getPath());
-        File welfile = new File(WordFieldHandle.class.getResource("welfare.txt").getPath());
+        File itfile = new File(WordHandle.class.getResource("it.txt").getPath());
+        File welfile = new File(WordHandle.class.getResource("welfare.txt").getPath());
         try(
                 Scanner itsc = new Scanner(itfile);
                 Scanner welsc = new Scanner(welfile)

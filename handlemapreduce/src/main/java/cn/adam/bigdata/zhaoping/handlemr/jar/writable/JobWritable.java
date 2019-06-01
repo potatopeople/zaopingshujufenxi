@@ -70,9 +70,9 @@ public class JobWritable implements WritableComparable<JobWritable> {
     }
 
     public String getText() {
-        return this.company_name
-                +this.job_edu_require
-                +this.job_exp_require
+        return this.company_location
+                +this.company_name
+                +this.job_info
                 +this.job_name;
     }
 
@@ -81,11 +81,11 @@ public class JobWritable implements WritableComparable<JobWritable> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         JobWritable that = (JobWritable) o;
-        return Objects.equals(this.getText(), that.getText());
+        return getText().equals(that.getText());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.getText());
+        return getText().hashCode();
     }
 }

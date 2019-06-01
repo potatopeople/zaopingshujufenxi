@@ -1,12 +1,12 @@
 package cn.adam.bigdata.zhaoping.handle;
 
-import cn.adam.bigdata.zhaoping.basic.FieldHandleTemp;
+import cn.adam.bigdata.zhaoping.basic.HandleTemp;
 import cn.adam.bigdata.zhaoping.entity.FieldMatch;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class FilterField extends FieldHandleTemp<List<String>> {
+public class Filter extends HandleTemp<List<String>> {
 
     private final int[] x = {0, 6, 7, 8, 11};
 

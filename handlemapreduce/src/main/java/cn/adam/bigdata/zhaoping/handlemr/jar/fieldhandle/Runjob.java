@@ -1,6 +1,7 @@
 package cn.adam.bigdata.zhaoping.handlemr.jar.fieldhandle;
 
 import cn.adam.bigdata.zhaoping.entity.FieldMatch;
+import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -40,7 +41,7 @@ public class Runjob {
 			job.setMapperClass(MapReduceDemo.class);
 			job.setReducerClass(ReducerDemo.class);
 			job.setMapOutputKeyClass(Text.class);
-			job.setMapOutputValueClass(IntWritable.class);
+			job.setMapOutputValueClass(JobWritable.class);
 
 //			FileInputFormat.addInputPath(job, new Path("hdfs:/drsn/test/input/test_text.txt"));
 //			Path out = new Path("hdfs:/drsn/test/output");

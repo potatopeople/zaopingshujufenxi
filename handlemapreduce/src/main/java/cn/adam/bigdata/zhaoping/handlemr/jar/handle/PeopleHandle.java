@@ -1,21 +1,20 @@
 package cn.adam.bigdata.zhaoping.handlemr.jar.handle;
 
-import cn.adam.bigdata.zhaoping.basic.FieldHandleTemp;
+import cn.adam.bigdata.zhaoping.basic.HandleTemp;
 import cn.adam.bigdata.zhaoping.entity.FieldMatch;
 import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PeopleFieldHandle extends FieldHandleTemp<JobWritable> {
+public class PeopleHandle extends HandleTemp<JobWritable> {
 
     private Pattern p = Pattern.compile(FieldMatch.INT);
 
     @Override
     public void handle(JobWritable jobWritable) {
         String people = jobWritable.getCompany_people();
-        if (people == null||"".equals(people) || "保密".equals(people)) {
+        if (people == null||"".equals(people) || people.contains("保密")) {
             jobWritable.setCompany_people(null);
             return;
         }

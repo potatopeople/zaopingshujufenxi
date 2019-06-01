@@ -18,6 +18,43 @@ import java.util.function.Predicate;
 @Slf4j
 public class Utils {
 
+    public static <T> T copyFieldToObject(Object from, T to) {
+        Class fclazz = from.getClass();
+        Class tclazz = to.getClass();
+
+        Field[] fromField = fclazz.getDeclaredFields();
+        for (Field f : fromField){
+            f.setAccessible(true);
+            try {
+                Object o = f.get(from);
+                if (o != null){
+                    Field toField = tclazz.getDeclaredField(f.getName());
+                    toField.setAccessible(true);
+                    toField.set(to, o);
+                }
+            } catch (Exception e) {
+                log.error("操作对象指出错！", e);
+            }
+        }
+        return to;
+    }
+    public static Object emptyFieldToNull(Object o) {
+        Class clazz = o.getClass();
+        Field[] declaredFields = clazz.getDeclaredFields();
+        for(Field f : declaredFields){
+            f.setAccessible(true);
+            try {
+                Object re = f.get(o);
+                if (re != null&&"".equals(re.toString())){
+                    f.set(o, null);
+                }
+            } catch (IllegalAccessException e) {
+                log.error("获取属性值出错！", e);
+            }
+        }
+
+        return o;
+    }
     public static CSVRecord csvstrToCSVRecord(String csvstr, CSVFormat format) {
         CSVRecord record = null;
         try {
@@ -130,7 +167,8 @@ public class Utils {
         for (Field f: declaredFields) {
             f.setAccessible(true);
             try {
-                dataOutput.writeUTF(f.get(o).toString());
+                Object oo = f.get(o);
+                dataOutput.writeUTF(oo == null?"":oo.toString());
             } catch (Exception e) {
                 log.error("序列化写出出错！",e);
             }
