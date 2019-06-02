@@ -4,7 +4,6 @@ import cn.adam.bigdata.zhaoping.basic.Handle;
 import cn.adam.bigdata.zhaoping.handlemr.jar.handle.CompanyCompletionGroupHandle;
 import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
 import cn.adam.bigdata.zhaoping.util.Utils;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;

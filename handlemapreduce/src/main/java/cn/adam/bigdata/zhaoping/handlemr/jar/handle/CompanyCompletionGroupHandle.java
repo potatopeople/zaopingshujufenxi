@@ -1,12 +1,9 @@
 package cn.adam.bigdata.zhaoping.handlemr.jar.handle;
 
-import cn.adam.bigdata.zhaoping.basic.HandleTemp;
+import cn.adam.bigdata.zhaoping.basic.Handle;
 import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
 
-import java.util.List;
-import java.util.Set;
-
-public class CompanyCompletionGroupHandle extends HandleTemp<Iterable<JobWritable>> {
+public class CompanyCompletionGroupHandle implements Handle<Iterable<JobWritable>> {
     @Override
     public void handle(Iterable<JobWritable> jobWritables) {
         JobWritable job = new JobWritable();

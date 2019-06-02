@@ -36,4 +36,7 @@ public class   FieldMatch {
     public final static String JAR = "mapred.jar\tD:\\data\\code\\idea\\zaopingshujufenxi" +
             "\\handlemapreduce\\target\\handlemapreduce-1.0-SNAPSHOT.jar";
     public final static String MP = "mapreduce.app-submission.cross-platform\ttrue";
+    public final static String HAVECONFCLASS = "adam_haveconffileclass";
+    public final static String HAVECONFDIR = "adam_haveconffiledir";
+    public final static String INOUTDIR = "adam_inoutdir";
 }

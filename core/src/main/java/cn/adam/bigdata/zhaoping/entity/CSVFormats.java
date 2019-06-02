@@ -1,36 +1,26 @@
 package cn.adam.bigdata.zhaoping.entity;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 
-import java.io.File;
-import java.net.URISyntaxException;
-import java.util.Scanner;
-
+@Slf4j
 public class CSVFormats {
     public static CSVFormat FIRSTRECORDASHEADER = CSVFormat.DEFAULT.withFirstRecordAsHeader();
-    public static CSVFormat BEFOR = null;
-    public static CSVFormat AFTER = null;
     public static CSVFormat DEFAULT = CSVFormat.DEFAULT;
+    public static CSVFormat  BEFOR = CSVFormat.DEFAULT.withHeader(
+            "company_financing_stage", "company_industry", "company_location",
+            "company_name", "company_nature", "company_overview", "company_people",
+            "job_edu_require", "job_exp_require", "job_info", "job_name", "job_salary",
+            "job_tag", "job_welfare"
+    );
+    public static CSVFormat AFTER = CSVFormat.DEFAULT.withHeader(
+            "company_financing_stage","company_industry","company_location",
+            "company_name", "company_nature", "company_overview", "company_people",
+            "company_people_handle", "company_people_level", "job_edu_require",
+            "job_edu_require_handle", "job_edu_require_level", "job_exp_require",
+            "job_exp_require_handle", "job_exp_require_level", "job_info", "job_info_words",
+            "job_name", "job_salary", "job_salary_handle", "job_salary_level", "job_tag",
+            "job_welfare", "job_welfare_words"
+    );
 
-    static {
-        try (
-                Scanner beforsc = new Scanner(new File(CSVFormats.class.getResource("beforhandle.txt").getPath()));
-                Scanner aftersc = new Scanner(new File(CSVFormats.class.getResource("afterhandle.txt").getPath()));
-        ){
-            StringBuilder bsb = new StringBuilder();
-            StringBuilder asb = new StringBuilder();
-            while (beforsc.hasNextLine())
-                bsb.append(beforsc.nextLine()).append("\n");
-            bsb.deleteCharAt(bsb.length()-1);
-            BEFOR = CSVFormat.DEFAULT.withHeader(bsb.toString().split("\n"));
-
-            while (aftersc.hasNextLine())
-                asb.append(aftersc.nextLine()).append("\n");
-            asb.deleteCharAt(asb.length()-1);
-            AFTER = CSVFormat.DEFAULT.withHeader(asb.toString().split("\n"));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

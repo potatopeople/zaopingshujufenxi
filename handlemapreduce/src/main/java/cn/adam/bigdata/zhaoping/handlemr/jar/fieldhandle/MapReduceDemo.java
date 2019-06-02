@@ -2,10 +2,13 @@ package cn.adam.bigdata.zhaoping.handlemr.jar.fieldhandle;
 
 import cn.adam.bigdata.zhaoping.basic.Handle;
 import cn.adam.bigdata.zhaoping.entity.CSVFormats;
+import cn.adam.bigdata.zhaoping.entity.FieldMatch;
 import cn.adam.bigdata.zhaoping.handlemr.jar.handle.*;
 import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
 import cn.adam.bigdata.zhaoping.util.Utils;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -41,5 +44,17 @@ public class MapReduceDemo extends Mapper<LongWritable, Text, Text, JobWritable>
 				new Text(jobWritable.getCompany_name()),
 				jobWritable
 		);
+	}
+
+	@Override
+	protected void setup(Context context) throws IOException, InterruptedException {
+		super.setup(context);
+		Configuration configuration = context.getConfiguration();
+		HaveConfFileTemp.CONF = configuration;
+		String dir = configuration.get(FieldMatch.HAVECONFDIR);
+		if (dir == null || dir.equals("")) {
+			return;
+		}
+		HaveConfFileTemp.setConfDir(new Path(dir));
 	}
 }

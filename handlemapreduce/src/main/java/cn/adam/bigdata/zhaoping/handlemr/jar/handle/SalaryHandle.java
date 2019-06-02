@@ -1,13 +1,13 @@
 package cn.adam.bigdata.zhaoping.handlemr.jar.handle;
 
-import cn.adam.bigdata.zhaoping.basic.HandleTemp;
+import cn.adam.bigdata.zhaoping.basic.Handle;
 import cn.adam.bigdata.zhaoping.entity.FieldMatch;
 import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SalaryHandle extends HandleTemp<JobWritable> {
+public class SalaryHandle implements Handle<JobWritable> {
 
     private Pattern p = Pattern.compile(FieldMatch.DOUBLE);
     @Override

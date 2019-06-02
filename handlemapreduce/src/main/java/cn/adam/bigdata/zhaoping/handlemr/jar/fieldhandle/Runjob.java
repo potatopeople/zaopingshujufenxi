@@ -1,12 +1,12 @@
 package cn.adam.bigdata.zhaoping.handlemr.jar.fieldhandle;
 
+import cn.adam.bigdata.zhaoping.basic.HaveConfFile;
 import cn.adam.bigdata.zhaoping.entity.FieldMatch;
 import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -30,11 +30,17 @@ public class Runjob {
 				configuration.set(ss[0], ss[1]);
 			}
 		}
+		configuration.set("dfs.permissions","false");
 		Job job;
 		
 		try {
 			FileSystem fs = FileSystem.get(configuration);
-			
+
+			String haveconf = configuration.get(FieldMatch.HAVECONFCLASS);
+			if (haveconf != null && !haveconf.equals("")) {
+				System.out.println(2333);
+				updateConfFileToHDFS(fs, configuration);
+			}
 			job = Job.getInstance(configuration);
 			job.setJarByClass(Runjob.class);
 			job.setJobName("test2");
@@ -43,10 +49,15 @@ public class Runjob {
 			job.setMapOutputKeyClass(Text.class);
 			job.setMapOutputValueClass(JobWritable.class);
 
-//			FileInputFormat.addInputPath(job, new Path("hdfs:/drsn/test/input/test_text.txt"));
-//			Path out = new Path("hdfs:/drsn/test/output");
-			FileInputFormat.addInputPath(job, new Path("F:\\rjb\\input\\ja.csv"));
-			Path out = new Path("F:\\rjb\\output");
+			String[] inout = configuration.get(FieldMatch.INOUTDIR).split(",");
+			FileInputFormat.addInputPath(job, new Path(inout[0]));
+			Path out = new Path(inout[1]);
+
+//			FileInputFormat.addInputPath(job, new Path("hdfs:/drsn/rjb/input/ja.csv"));
+//			Path out = new Path("hdfs:/drsn/rjb/output");
+
+//			FileInputFormat.addInputPath(job, new Path("F:\\rjb\\input\\ja.csv"));
+//			Path out = new Path("F:\\rjb\\output");
 			if (fs.exists(out)) {
 				fs.delete(out, true);
 			}
@@ -59,6 +70,37 @@ public class Runjob {
 		} catch (IOException | ClassNotFoundException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			log.error("mapreduce执行出错！", e);
+		}
+
+	}
+
+	private static void updateConfFileToHDFS(FileSystem fs, Configuration configuration){
+		String[] confclass = configuration.get(FieldMatch.HAVECONFCLASS).split(",");
+		String hdfs = configuration.get(FieldMatch.HAVECONFDIR);
+		Path hdfsPath = new Path(hdfs);
+
+		try {
+			if (fs.exists(hdfsPath))
+				fs.delete(hdfsPath, true);
+			fs.mkdirs(hdfsPath);
+		} catch (IOException e) {
+			log.error("初始化conf的hdfs文件夹失败！",e);
+			throw new RuntimeException(e);
+		}
+
+		for (String s : confclass) {
+			try {
+				Class<?> clazz = Class.forName(s);
+				HaveConfFile o = (HaveConfFile)clazz.newInstance();
+				String[] confFile = o.getConfFile();
+				for (String f : confFile) {
+					System.out.println(f);
+					fs.copyFromLocalFile(new Path("file:"+f), hdfsPath);
+				}
+			} catch (Exception e) {
+				log.error("conf文件处理失败！",e);
+				throw new RuntimeException(e);
+			}
 		}
 
 	}

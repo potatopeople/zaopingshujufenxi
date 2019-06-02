@@ -1,6 +1,6 @@
 package cn.adam.bigdata.zhaoping.handle;
 
-import cn.adam.bigdata.zhaoping.basic.HandleTemp;
+import cn.adam.bigdata.zhaoping.basic.Handle;
 import cn.adam.bigdata.zhaoping.entity.FieldMatch;
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Slf4j
-public class Correction extends HandleTemp<List<String>> {
+public class Correction implements Handle<List<String>> {
     @Override
     public void handle(List<String> list) {
         cPeopleCorr(list);
