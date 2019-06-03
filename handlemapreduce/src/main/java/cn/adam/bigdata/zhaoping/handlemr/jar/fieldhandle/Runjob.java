@@ -5,6 +5,7 @@ import cn.adam.bigdata.zhaoping.entity.FieldMatch;
 import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
@@ -50,7 +51,7 @@ public class Runjob {
 			job.setMapOutputValueClass(JobWritable.class);
 
 			String[] inout = configuration.get(FieldMatch.INOUTDIR).split(",");
-			FileInputFormat.addInputPath(job, new Path(inout[0]));
+			FileInputFormat.addInputPath(job, new Path(inout[0]+inout[2]));
 			Path out = new Path(inout[1]);
 
 //			FileInputFormat.addInputPath(job, new Path("hdfs:/drsn/rjb/input/ja.csv"));
@@ -65,6 +66,13 @@ public class Runjob {
 			
 			boolean f = job.waitForCompletion(true);
 			if (f) {
+				FileStatus[] fileStatuses = fs.listStatus(out);
+				for (FileStatus fileStatus : fileStatuses) {
+					Path outfilepath = fileStatus.getPath();
+					if (outfilepath.getName().startsWith("part"))
+						fs.rename(outfilepath,
+								new Path(inout[0]+"jobfinally.csv"));
+				}
 				System.out.println("sucssec");
 			}
 		} catch (IOException | ClassNotFoundException | InterruptedException e) {

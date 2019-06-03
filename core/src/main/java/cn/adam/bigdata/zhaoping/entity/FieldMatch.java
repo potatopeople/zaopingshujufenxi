@@ -2,7 +2,8 @@ package cn.adam.bigdata.zhaoping.entity;
 
 public class   FieldMatch {
     public static final String ALL = "[\\x{4e00}-\\x{9fa5}|0-9|A-z]+";
-    public static final String ALLBD = "[\\x{4e00}-\\x{9fa5}|0-9|A-z]+";
+    public static final String ALLBD = "[^\\x{4e00}-\\x{9fa5}|0-9|A-z]+";
+    public static final String ALLNOT = "[^\\x{4e00}-\\x{9fa5}|A-z]+";
     public static final String EMPTY = "\\s+";
 
     public static final String CFS = "^(战略投资|已上市|其他|IPO上市|A轮|B轮|C轮|D轮(及以上)?" +

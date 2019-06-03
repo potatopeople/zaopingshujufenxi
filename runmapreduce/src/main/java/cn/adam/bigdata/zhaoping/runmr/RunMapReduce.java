@@ -11,7 +11,7 @@ public class RunMapReduce {
     private final static String localdir = FieldMatch.INOUTDIR+
             "\tF:\\rjb\\input\\ja.csv,F:\\rjb\\output";
     private final static String serverdir = FieldMatch.INOUTDIR+
-            "\thdfs:/drsn/rjb/input/ja.csv,hdfs:/drsn/rjb/output";
+            "\thdfs:/drsn/rjb/input/,hdfs:/drsn/rjb/output,ja.csv";
 
     public static void main(String[] args) {
         System.setProperty("hadoop.home.dir", "D:\\program\\greensoft\\hadoop-2.7.5");
