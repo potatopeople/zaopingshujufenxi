@@ -16,9 +16,12 @@ public class RunMapReduce {
     public static void main(String[] args) {
         System.setProperty("hadoop.home.dir", "D:\\program\\greensoft\\hadoop-2.7.5");
 
+//        conf().runForServer(JAR);
+        cn.adam.bigdata.zhaoping.handlemr.jar.RunMapReduce.conf().runForServer("D:\\data\\code\\idea\\zaopingshujufenxi" +
+                "\\handlemapreduce\\target\\handlemapreduce-1.0-SNAPSHOT.jar");
 //        runLoacahost(); //本地运行
 
-        runServer(); //服务器运行
+//        runServer(); //服务器运行
     }
 
     /**

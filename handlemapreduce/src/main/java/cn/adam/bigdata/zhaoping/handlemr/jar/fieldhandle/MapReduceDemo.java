@@ -5,6 +5,7 @@ import cn.adam.bigdata.zhaoping.entity.CSVFormats;
 import cn.adam.bigdata.zhaoping.entity.FieldMatch;
 import cn.adam.bigdata.zhaoping.handlemr.jar.handle.*;
 import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
+import cn.adam.bigdata.zhaoping.basic.HaveConfFileTemp;
 import cn.adam.bigdata.zhaoping.util.Utils;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.hadoop.conf.Configuration;

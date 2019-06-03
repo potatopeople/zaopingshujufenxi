@@ -2,6 +2,7 @@ package cn.adam.bigdata.zhaoping.handlemr.jar.handle;
 
 import cn.adam.bigdata.zhaoping.basic.Handle;
 import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
+import cn.adam.bigdata.zhaoping.basic.HaveConfFileTemp;
 import cn.adam.bigdata.zhaoping.util.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.ansj.domain.Result;
@@ -12,9 +13,7 @@ import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.*;
 
 @Slf4j
@@ -45,8 +44,13 @@ public class WordHandle extends HaveConfFileTemp implements Handle<JobWritable> 
                     throw new RuntimeException(e);
                 }
             } else {
-                File itfile = new File(WordHandle.class.getResource("it.txt").getPath());
-                File welfile = new File(WordHandle.class.getResource("welfare.txt").getPath());
+                try {
+                    itin = new FileInputStream(new File(WordHandle.class.getResource("it.txt").getPath()));
+                    welin = new FileInputStream(new File(WordHandle.class.getResource("welfare.txt").getPath()));
+                } catch (FileNotFoundException e) {
+                    log.error("初始化自定义词库获取词库文件出错！", e);
+                    throw new RuntimeException(e);
+                }
             }
 
             try (

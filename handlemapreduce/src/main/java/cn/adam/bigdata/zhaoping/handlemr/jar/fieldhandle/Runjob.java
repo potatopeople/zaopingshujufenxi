@@ -39,7 +39,7 @@ public class Runjob {
 
 			String haveconf = configuration.get(FieldMatch.HAVECONFCLASS);
 			if (haveconf != null && !haveconf.equals("")) {
-				System.out.println(2333);
+				log.info("处理配置文件！");
 				updateConfFileToHDFS(fs, configuration);
 			}
 			job = Job.getInstance(configuration);

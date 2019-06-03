@@ -17,6 +17,13 @@ import java.util.*;
 @Slf4j
 public class Utils {
 
+    public static boolean haveNull(Object... os){
+        for (Object o : os) {
+            if (Objects.isNull(o))
+                return true;
+        }
+        return false;
+    }
     public static <T> T copyFieldToObject(Object from, T to) {
         Class fclazz = from.getClass();
         Class tclazz = to.getClass();

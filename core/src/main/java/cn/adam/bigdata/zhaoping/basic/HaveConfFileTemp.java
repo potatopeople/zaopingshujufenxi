@@ -1,6 +1,5 @@
-package cn.adam.bigdata.zhaoping.handlemr.jar.handle;
+package cn.adam.bigdata.zhaoping.basic;
 
-import cn.adam.bigdata.zhaoping.basic.HaveConfFile;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 
