@@ -3,6 +3,7 @@ package cn.adam.bigdata.zhaoping.handlemr.jar.fieldhandle;
 import cn.adam.bigdata.zhaoping.basic.Handle;
 import cn.adam.bigdata.zhaoping.defaultdemo.DefaultMapReduce;
 import cn.adam.bigdata.zhaoping.entity.CSVFormats;
+import cn.adam.bigdata.zhaoping.handlemr.jar.handle.*;
 import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
 import cn.adam.bigdata.zhaoping.util.Utils;
 import org.apache.commons.csv.CSVRecord;
@@ -14,11 +15,11 @@ import java.io.IOException;
 public class MapReduceDemo extends DefaultMapReduce<LongWritable, Text, Text, JobWritable> {
 
 	private Handle<JobWritable>[] handles = new Handle[]{
-//			new PeopleHandle(),
-//			new EduHandle(),
-//			new ExpHandle(),
-//			new SalaryHandle(),
-//			new WordHandle()
+			new PeopleHandle(),
+			new EduHandle(),
+			new ExpHandle(),
+			new SalaryHandle(),
+			new WordHandle()
 	};
 
 	public MapReduceDemo(){
