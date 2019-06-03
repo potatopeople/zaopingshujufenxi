@@ -33,11 +33,4 @@ public class   FieldMatch {
     public static final String EDU = "(初中|中专|中技|中职|职高|高中|大专|高职|本科|硕士|博士|学历不限)";
     public static final String EDU2 = "(初中|中专|中技|中职|职高|高中|大专|高职|本科|硕士|MBA|博士|博士后|其他|不限)";
 
-    public final static String CONF = "adam.conf";
-    public final static String JAR = "mapred.jar\tD:\\data\\code\\idea\\zaopingshujufenxi" +
-            "\\handlemapreduce\\target\\handlemapreduce-1.0-SNAPSHOT.jar";
-    public final static String MP = "mapreduce.app-submission.cross-platform\ttrue";
-    public final static String HAVECONFCLASS = "adam_haveconffileclass";
-    public final static String HAVECONFDIR = "adam_haveconffiledir";
-    public final static String INOUTDIR = "adam_inoutdir";
 }

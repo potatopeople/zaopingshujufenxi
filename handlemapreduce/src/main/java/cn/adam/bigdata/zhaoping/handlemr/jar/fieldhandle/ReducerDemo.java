@@ -1,8 +1,6 @@
 package cn.adam.bigdata.zhaoping.handlemr.jar.fieldhandle;
 
 import cn.adam.bigdata.zhaoping.basic.Handle;
-import cn.adam.bigdata.zhaoping.handlemr.jar.handle.CompanyCompletionGroupHandle;
-import cn.adam.bigdata.zhaoping.handlemr.jar.handle.LocaltionHandle;
 import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
 import cn.adam.bigdata.zhaoping.util.Utils;
 import org.apache.hadoop.io.NullWritable;
@@ -14,10 +12,10 @@ import java.util.*;
 
 public class ReducerDemo extends Reducer<Text, JobWritable, Text, NullWritable>{
 	private Handle<Iterable<JobWritable>>[] grouphandles = new Handle[]{
-			new CompanyCompletionGroupHandle()
+//			new CompanyCompletionGroupHandle()
 	};
 	private Handle<JobWritable>[] fieldhandles = new Handle[]{
-			new LocaltionHandle()
+//			new LocaltionHandle()
 	};
 	@Override
 	protected void reduce(Text key, Iterable<JobWritable> values,

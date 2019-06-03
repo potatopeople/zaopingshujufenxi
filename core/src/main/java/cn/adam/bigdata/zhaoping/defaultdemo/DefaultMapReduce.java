@@ -1,7 +1,6 @@
 package cn.adam.bigdata.zhaoping.defaultdemo;
 
 import cn.adam.bigdata.zhaoping.basic.HaveConfFileTemp;
-import cn.adam.bigdata.zhaoping.entity.FieldMatch;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -14,7 +13,7 @@ public abstract class DefaultMapReduce<KI, VI, KO, VO> extends Mapper<KI, VI, KO
 		super.setup(context);
 		Configuration configuration = context.getConfiguration();
 		HaveConfFileTemp.CONF = configuration;
-		String dir = configuration.get(FieldMatch.HAVECONFDIR);
+		String dir = configuration.get(DefaultRunjob.HAVECONFDIR);
 		if (dir == null || dir.equals("")) {
 			return;
 		}

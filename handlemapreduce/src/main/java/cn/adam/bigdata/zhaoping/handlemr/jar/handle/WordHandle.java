@@ -1,8 +1,8 @@
 package cn.adam.bigdata.zhaoping.handlemr.jar.handle;
 
 import cn.adam.bigdata.zhaoping.basic.Handle;
-import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
 import cn.adam.bigdata.zhaoping.basic.HaveConfFileTemp;
+import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
 import cn.adam.bigdata.zhaoping.util.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.ansj.domain.Result;

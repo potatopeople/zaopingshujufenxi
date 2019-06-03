@@ -1,7 +1,6 @@
 package cn.adam.bigdata.zhaoping.defaultdemo;
 
 import cn.adam.bigdata.zhaoping.basic.HaveConfFile;
-import cn.adam.bigdata.zhaoping.entity.FieldMatch;
 import cn.adam.bigdata.zhaoping.util.Utils;
 import lombok.Getter;
 import lombok.NonNull;
@@ -18,15 +17,13 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 public class DefaultRunjob {
 
 	public final static String MP = "mapreduce.app-submission.cross-platform";
+	public final static String HAVECONFDIR = "adam_haveconffiledir";
 	public final static String JAR = "mapred.jar";
 	public final static String OUT = "tempout/";
 	public final static String OUTPREFIX = "result_";
@@ -57,7 +54,7 @@ public class DefaultRunjob {
 	@Getter@Setter
 	private String outputDir;
 	@Getter@Setter
-	private String outputFileName = "";
+	private String outputFileName;
 
 	public DefaultRunjob(){
 		confmap = new HashMap<>();
@@ -70,6 +67,7 @@ public class DefaultRunjob {
 	}
 	public void runForLocal(){
 		this.checkConf();
+		this.confClass.clear();
 		run();
 	}
 	private void run() {
@@ -97,13 +95,14 @@ public class DefaultRunjob {
 			job.setMapOutputKeyClass(this.mapOutputKeyClass);
 			job.setMapOutputValueClass(this.mapOutputValueClass);
 
+			if (!this.inputDir.endsWith("/"))
+				this.inputDir+="/";
 			FileInputFormat.addInputPath(job,
 					new Path(this.inputDir+this.inputFileName));
-			if (this.outputDir == null) {
-				if (!this.inputDir.endsWith("/"))
-					inputDir+="/";
+			if (this.outputDir == null)
 				this.outputDir = this.inputDir+OUT;
-			}
+			else if (!this.outputDir.endsWith("/"))
+				this.outputDir +="/";
 			Path out = new Path(this.outputDir);
 
 			if (fs.exists(out)) {
@@ -117,7 +116,7 @@ public class DefaultRunjob {
 					Path outfilepath = fileStatus.getPath();
 					if (outfilepath.getName().startsWith("part")) {
 						StringBuilder sb = new StringBuilder();
-						if (this.outputDir.startsWith(this.inputDir+OUT))
+						if (this.outputDir.equals(this.inputDir+OUT))
 							sb.append(this.inputDir);
 						else
 							sb.append(this.outputDir);
@@ -130,7 +129,7 @@ public class DefaultRunjob {
 				}
 				log.info("sucsses");
 			}
-			if (delCacheDir)
+			if (delCacheDir&&this.confClass.size()>0)
 				fs.delete(new Path(cacheDir), true);
 		} catch (IOException | ClassNotFoundException | InterruptedException e) {
 			log.error("mapreduce执行出错！", e);
@@ -139,7 +138,7 @@ public class DefaultRunjob {
 	}
 
 	private void updateConfFileToHDFS(FileSystem fs, Configuration configuration){
-		configuration.set(FieldMatch.HAVECONFDIR, cacheDir);
+		configuration.set(HAVECONFDIR, cacheDir);
 //		HaveConfFileTemp.setConfDir(new Path(cacheDir));
 		Path hdfsCachePath = new Path(cacheDir);
 
@@ -180,8 +179,17 @@ public class DefaultRunjob {
 		return this.confmap.remove(k);
 	}
 
+	public Set<HaveConfFile> getConfClass() {
+		return confClass;
+	}
+	public void setConfClass(Set<HaveConfFile> confClass) {
+		this.confClass = confClass;
+	}
 	public boolean addConfClass(HaveConfFile h) {
 		return confClass.add(h);
+	}
+	public boolean addConfClass(Collection<? extends HaveConfFile> h) {
+		return confClass.addAll(h);
 	}
 	public boolean removeConfClass(HaveConfFile h) {
 		return this.confClass.remove(h);

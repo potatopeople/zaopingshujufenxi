@@ -4,7 +4,6 @@ import cn.adam.bigdata.zhaoping.basic.Handle;
 import cn.adam.bigdata.zhaoping.entity.FieldMatch;
 import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LocaltionHandle implements Handle<JobWritable> {
