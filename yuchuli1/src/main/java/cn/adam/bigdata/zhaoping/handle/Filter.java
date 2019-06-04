@@ -13,7 +13,7 @@ public class Filter implements Handle<List<String>> {
     @Override
     public void handle(List<String> list) {
         for (int i = 0; i < list.size(); i++) {
-            boolean is = Arrays.binarySearch(x, i) >= 0;
+            boolean is = binarySearch(x, i) >= 0;
             list.set(i, work(list.get(i), is));
         }
     }

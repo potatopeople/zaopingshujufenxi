@@ -1,7 +1,7 @@
 package cn.adam.bigdata.zhaoping.handlemr.jar.handle;
 
 import cn.adam.bigdata.zhaoping.basic.Handle;
-import cn.adam.bigdata.zhaoping.handlemr.jar.writable.JobWritable;
+import cn.adam.bigdata.zhaoping.writable.JobWritable;
 
 public class CompanyCompletionGroupHandle implements Handle<Iterable<JobWritable>> {
     @Override

@@ -1,6 +1,7 @@
 package cn.adam.bigdata.zhaoping.defaultdemo;
 
 import cn.adam.bigdata.zhaoping.basic.HaveConfFile;
+import cn.adam.bigdata.zhaoping.basic.HaveConfFileTemp;
 import cn.adam.bigdata.zhaoping.util.Utils;
 import lombok.Getter;
 import lombok.NonNull;
@@ -34,7 +35,9 @@ public class DefaultRunjob {
 	private String cacheDir = "hdfs:/conf/";
 	@Getter@Setter
 	private boolean delCacheDir = true;
-	private Set<HaveConfFile> confClass = new HashSet<>();
+	@Getter@Setter
+	private boolean isServer = true;
+	private Set<Class<? extends HaveConfFile>> confClass = new HashSet<>();
 
 	@NonNull@Getter@Setter
 	private Class<?> runClass;
@@ -59,7 +62,7 @@ public class DefaultRunjob {
 	public DefaultRunjob(){
 		confmap = new HashMap<>();
 	}
-	public void runForServer(@NonNull String jarPath){
+	public void runForRemote(@NonNull String jarPath){
 		this.checkConf();
 		this.addConf(MP, "true");
 		this.addConf(JAR, jarPath);
@@ -82,7 +85,9 @@ public class DefaultRunjob {
 		try {
 			FileSystem fs = FileSystem.get(configuration);
 
-//			HaveConfFileTemp.CONF = configuration;
+			HaveConfFileTemp.CONF = configuration;
+			if (this.isServer)
+				configuration.set(HAVECONFDIR, cacheDir);
 			if (this.confClass.size() > 0) {
 				log.info("处理配置文件！");
 				updateConfFileToHDFS(fs, configuration);
@@ -124,7 +129,10 @@ public class DefaultRunjob {
 							sb.append(OUTPREFIX + this.inputFileName);
 						else
 							sb.append(this.outputFileName);
-						fs.rename(outfilepath,new Path(sb.toString()));
+						Path op = new Path(sb.toString());
+						if (fs.exists(op))
+							fs.delete(op, true);
+						fs.rename(outfilepath, op);
 					}
 				}
 				log.info("sucsses");
@@ -138,7 +146,7 @@ public class DefaultRunjob {
 	}
 
 	private void updateConfFileToHDFS(FileSystem fs, Configuration configuration){
-		configuration.set(HAVECONFDIR, cacheDir);
+//		configuration.set(HAVECONFDIR, cacheDir);
 //		HaveConfFileTemp.setConfDir(new Path(cacheDir));
 		Path hdfsCachePath = new Path(cacheDir);
 
@@ -151,8 +159,9 @@ public class DefaultRunjob {
 			throw new RuntimeException(e);
 		}
 
-		for (HaveConfFile h : confClass) {
+		for (Class<? extends HaveConfFile > o : confClass) {
 			try {
+				HaveConfFile h = (HaveConfFile) o.newInstance();
 				String[] confFile = h.getConfFile();
 				for (String f : confFile) {
 					System.out.println(f);
@@ -179,19 +188,19 @@ public class DefaultRunjob {
 		return this.confmap.remove(k);
 	}
 
-	public Set<HaveConfFile> getConfClass() {
+	public Set<Class<? extends HaveConfFile>> getConfClass() {
 		return confClass;
 	}
-	public void setConfClass(Set<HaveConfFile> confClass) {
+	public void setConfClass(Set<Class<? extends HaveConfFile>> confClass) {
 		this.confClass = confClass;
 	}
-	public boolean addConfClass(HaveConfFile h) {
+	public boolean addConfClass(Class<? extends HaveConfFile> h) {
 		return confClass.add(h);
 	}
-	public boolean addConfClass(Collection<? extends HaveConfFile> h) {
+	public boolean addConfClass(Collection<? extends Class<? extends HaveConfFile>> h) {
 		return confClass.addAll(h);
 	}
-	public boolean removeConfClass(HaveConfFile h) {
+	public boolean removeConfClass(Class<? extends HaveConfFile> h) {
 		return this.confClass.remove(h);
 	}
 }

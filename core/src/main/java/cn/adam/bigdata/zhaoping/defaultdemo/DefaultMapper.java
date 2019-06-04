@@ -7,16 +7,11 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 import java.io.IOException;
 
-public abstract class DefaultMapReduce<KI, VI, KO, VO> extends Mapper<KI, VI, KO, VO> {
+public abstract class DefaultMapper<KI, VI, KO, VO> extends Mapper<KI, VI, KO, VO> {
 	@Override
 	protected void setup(Context context) throws IOException, InterruptedException {
 		super.setup(context);
 		Configuration configuration = context.getConfiguration();
-		HaveConfFileTemp.CONF = configuration;
-		String dir = configuration.get(DefaultRunjob.HAVECONFDIR);
-		if (dir == null || dir.equals("")) {
-			return;
-		}
-		HaveConfFileTemp.setConfDir(new Path(dir));
+		HaveConfFileTemp.set(configuration);
 	}
 }

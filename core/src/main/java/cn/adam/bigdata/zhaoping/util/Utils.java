@@ -113,7 +113,7 @@ public class Utils {
 //                list = new ArrayList(ss.length);
                 for (Map.Entry e : m.entrySet()) {
                     int index = 0;
-                    if ((index = Arrays.binarySearch(ss, e.getKey())) >= 0) {
+                    if ((index = binarySearch(ss, e.getKey())) >= 0) {
 //                        list.set(index, e.getValue());
                         os[index] = e.getValue();
                     }
@@ -136,7 +136,8 @@ public class Utils {
                 for (Field f : declaredFields) {
                     f.setAccessible(true);
                     int index = 0;
-                    if ((index = Arrays.binarySearch(ss, f.getName())) >= 0) {
+//                    if ((index = binarySearch(ss, f.getName())) >= 0) {
+                        if ((index = binarySearch(ss, f.getName())) >= 0) {
                         try {
 //                            list.set(index, f.get(o));
                             os[index] = f.get(o);
@@ -153,6 +154,13 @@ public class Utils {
         return list;
     }
 
+    public static int binarySearch(Object[] os, Object o){
+        for (int i = 0; i < os.length; i++) {
+            if (o != null && o.equals(os[i]))
+                return i;
+        }
+        return -1;
+    }
     public static Object mapToObject(Map<String, ?> map, Object o) {
         Class clazz = o.getClass();
         try {

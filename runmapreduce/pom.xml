@@ -19,6 +19,11 @@
             <artifactId>handlemapreduce</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>cn.adam.bigdata.zhaoping</groupId>
+            <artifactId>locationget</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
         <!-- hadoop -->
         <dependency>

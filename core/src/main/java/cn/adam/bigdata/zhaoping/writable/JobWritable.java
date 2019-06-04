@@ -1,4 +1,4 @@
-package cn.adam.bigdata.zhaoping.handlemr.jar.writable;
+package cn.adam.bigdata.zhaoping.writable;
 
 import cn.adam.bigdata.zhaoping.entity.CSVFormats;
 import cn.adam.bigdata.zhaoping.util.Utils;
@@ -17,6 +17,11 @@ public class JobWritable implements WritableComparable<JobWritable> {
     private String company_financing_stage;
     private String company_industry;
     private String company_location;
+    private String company_location_province;
+    private String company_location_city;
+    private String company_location_district;
+    private String company_location_longitude;
+    private String company_location_latitude;
     private String company_name;
     private String company_nature;
     private String company_overview;
@@ -64,7 +69,7 @@ public class JobWritable implements WritableComparable<JobWritable> {
 
     @Override
     public String toString() {
-        return Utils.objectToCsvstr(this, CSVFormats.AFTER).split("\n")[1];
+        return Utils.objectToCsvstr(this, CSVFormats.getAFTERGETLOCATION()).split("\n")[1];
     }
 
     public String getText() {

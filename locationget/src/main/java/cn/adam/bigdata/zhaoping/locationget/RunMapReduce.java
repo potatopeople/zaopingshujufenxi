@@ -1,10 +1,9 @@
-package cn.adam.bigdata.zhaoping.handlemr.jar;
+package cn.adam.bigdata.zhaoping.locationget;
 
 import cn.adam.bigdata.zhaoping.defaultdemo.DefaultRunjob;
 import cn.adam.bigdata.zhaoping.entity.CSVFormats;
-import cn.adam.bigdata.zhaoping.handlemr.jar.work.MapperDemo;
-import cn.adam.bigdata.zhaoping.handlemr.jar.work.ReducerDemo;
-import cn.adam.bigdata.zhaoping.handlemr.jar.handle.WordHandle;
+import cn.adam.bigdata.zhaoping.locationget.work.MapperDemo;
+import cn.adam.bigdata.zhaoping.locationget.work.ReducerDemo;
 import cn.adam.bigdata.zhaoping.writable.JobWritable;
 import org.apache.hadoop.io.Text;
 
@@ -15,9 +14,9 @@ public class RunMapReduce {
 
     public static DefaultRunjob conf(){
         DefaultRunjob defaultRunjob = new DefaultRunjob();
-        defaultRunjob.addConfClass(WordHandle.class);
-        defaultRunjob.addConfClass(CSVFormats.class);
+
         defaultRunjob.setCacheDir("hdfs:/drsn/rjb/conf/");
+        defaultRunjob.addConfClass(CSVFormats.class);
         defaultRunjob.setRunClass(RunMapReduce.class);
         defaultRunjob.setMapperClass(MapperDemo.class);
         defaultRunjob.setReducerClass(ReducerDemo.class);
@@ -25,6 +24,7 @@ public class RunMapReduce {
         defaultRunjob.setMapOutputValueClass(JobWritable.class);
         defaultRunjob.setInputDir("hdfs:/drsn/rjb/input/");
         defaultRunjob.setInputFileName("ja.csv");
+        defaultRunjob.addConf(ReducerDemo.LOCATIONFILEPATH, "hdfs:/drsn/rjb/input/location.txt");
         defaultRunjob.setDelCacheDir(false);
 
         return defaultRunjob;
