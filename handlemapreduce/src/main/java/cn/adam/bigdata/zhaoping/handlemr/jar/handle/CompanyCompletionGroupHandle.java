@@ -4,6 +4,11 @@ import cn.adam.bigdata.zhaoping.basic.Handle;
 import cn.adam.bigdata.zhaoping.writable.JobWritable;
 
 public class CompanyCompletionGroupHandle implements Handle<Iterable<JobWritable>> {
+    private Handle<JobWritable>[] handles = new Handle[]{
+            new IndustryHandle(),
+            new FinancingHandle()
+    };
+
     @Override
     public void handle(Iterable<JobWritable> jobWritables) {
         JobWritable job = new JobWritable();
@@ -46,6 +51,12 @@ public class CompanyCompletionGroupHandle implements Handle<Iterable<JobWritable
                 )
                     job.setCompany_overview(j.getCompany_overview());
             }
+
+            job.setCompany_name(j.getCompany_name());
+        }
+
+        for (int i = 0; i < handles.length; i++) {
+            handles[i].handle(job);
         }
 //        System.out.println(job);
         for (JobWritable j : jobWritables) {
@@ -56,4 +67,6 @@ public class CompanyCompletionGroupHandle implements Handle<Iterable<JobWritable
             j.setCompany_overview(job.getCompany_overview());
         }
     }
+
+
 }

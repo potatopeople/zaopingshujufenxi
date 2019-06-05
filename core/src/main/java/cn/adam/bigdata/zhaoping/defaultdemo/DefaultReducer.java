@@ -8,6 +8,9 @@ import java.io.IOException;
 
 public abstract class DefaultReducer<KI, VI, KO, VO> extends Reducer<KI, VI, KO, VO>{
 	@Override
+	protected abstract void reduce(KI key, Iterable<VI> values, Context context) throws IOException, InterruptedException ;
+
+	@Override
 	protected void setup(Context context) throws IOException, InterruptedException {
 		super.setup(context);
 		Configuration configuration = context.getConfiguration();

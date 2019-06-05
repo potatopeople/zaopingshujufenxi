@@ -16,7 +16,7 @@ public class RunMapReduce {
     public static DefaultRunjob conf(){
         DefaultRunjob defaultRunjob = new DefaultRunjob();
         defaultRunjob.addConfClass(WordHandle.class);
-        defaultRunjob.addConfClass(CSVFormats.class);
+//        defaultRunjob.addConfClass(CSVFormats.class);
         defaultRunjob.setCacheDir("hdfs:/drsn/rjb/conf/");
         defaultRunjob.setRunClass(RunMapReduce.class);
         defaultRunjob.setMapperClass(MapperDemo.class);

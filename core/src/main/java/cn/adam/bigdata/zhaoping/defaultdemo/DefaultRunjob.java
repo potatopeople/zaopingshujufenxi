@@ -2,6 +2,7 @@ package cn.adam.bigdata.zhaoping.defaultdemo;
 
 import cn.adam.bigdata.zhaoping.basic.HaveConfFile;
 import cn.adam.bigdata.zhaoping.basic.HaveConfFileTemp;
+import cn.adam.bigdata.zhaoping.entity.CSVFormats;
 import cn.adam.bigdata.zhaoping.util.Utils;
 import lombok.Getter;
 import lombok.NonNull;
@@ -63,6 +64,7 @@ public class DefaultRunjob {
 		confmap = new HashMap<>();
 	}
 	public void runForRemote(@NonNull String jarPath){
+		this.addConfClass(CSVFormats.class);
 		this.checkConf();
 		this.addConf(MP, "true");
 		this.addConf(JAR, jarPath);

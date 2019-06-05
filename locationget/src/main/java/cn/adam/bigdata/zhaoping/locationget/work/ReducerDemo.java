@@ -18,6 +18,8 @@ import java.util.Scanner;
 
 public class ReducerDemo extends DefaultReducer<Text, JobWritable, Text, NullWritable> {
 	public static final String LOCATIONFILEPATH = "adam_locationfilepath";
+	public static final String LOCATIONDROM = "adam_locationfrom";
+	private String from;
 	private Map<String, Location> locationMap = new HashMap<>();
 
 	@Override
@@ -29,6 +31,11 @@ public class ReducerDemo extends DefaultReducer<Text, JobWritable, Text, NullWri
 
 		for (JobWritable j : values) {
         	if (location != null) {
+        		if (from != null && from.equals("cname")){
+        			j.setCompany_location(location.getProvince()+"-"
+							+location.getCity()+"-"
+							+location.getDistrict()+"-");
+				}
 				j.setCompany_location_province(location.getProvince());
 				j.setCompany_location_city(location.getCity());
 				j.setCompany_location_district(location.getDistrict());
@@ -45,6 +52,8 @@ public class ReducerDemo extends DefaultReducer<Text, JobWritable, Text, NullWri
 	protected void setup(Context context) throws IOException, InterruptedException {
 		super.setup(context);
 		getLocation(context);
+		from = context.getConfiguration().get(LOCATIONDROM);
+
 	}
 
 	public void getLocation(Context context) throws IOException {
@@ -55,6 +64,7 @@ public class ReducerDemo extends DefaultReducer<Text, JobWritable, Text, NullWri
 			while (sc.hasNextLine()){
 				String s = sc.nextLine();
 				Location location = getLocation(s);
+				if (location == null) continue;
 				locationMap.put(location.getLocation(), location);
 			}
 		}catch (Exception e){
@@ -67,7 +77,7 @@ public class ReducerDemo extends DefaultReducer<Text, JobWritable, Text, NullWri
 		s = s.replaceAll("\\[]", "");
 		String[] ss = s.split("\t");
 
-		if (ss[0].equals(""))ss[0] = ss[5];
+		if (ss[0].equals(""))return null;
 		location.setProvince(ss[0]);
 		if (ss[1].equals(""))ss[1] = null;
 		location.setCity(ss[1]);

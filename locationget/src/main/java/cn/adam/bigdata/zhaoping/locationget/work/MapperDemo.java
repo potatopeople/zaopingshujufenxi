@@ -12,6 +12,7 @@ import java.io.IOException;
 
 public class MapperDemo extends DefaultMapper<LongWritable, Text, Text, JobWritable> {
 
+	private String from;
 	@Override
 	protected void map(LongWritable key, Text value,
 			Context context)
@@ -22,9 +23,20 @@ public class MapperDemo extends DefaultMapper<LongWritable, Text, Text, JobWrita
 		if ("company_financing_stage".equals(jobWritable.getCompany_financing_stage()))
 			return;
 
+		String k;
+		if (from != null && from.equals("cname"))
+			k = jobWritable.getCompany_name();
+		else
+			k = jobWritable.getCompany_location();
 		context.write(
-				new Text(jobWritable.getCompany_location()),
+				new Text(k),
 				jobWritable
 		);
+	}
+
+	@Override
+	protected void setup(Context context) throws IOException, InterruptedException {
+		super.setup(context);
+		from = context.getConfiguration().get(ReducerDemo.LOCATIONDROM);
 	}
 }

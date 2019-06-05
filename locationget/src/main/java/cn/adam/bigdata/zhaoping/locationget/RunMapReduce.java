@@ -16,16 +16,16 @@ public class RunMapReduce {
         DefaultRunjob defaultRunjob = new DefaultRunjob();
 
         defaultRunjob.setCacheDir("hdfs:/drsn/rjb/conf/");
-        defaultRunjob.addConfClass(CSVFormats.class);
+//        defaultRunjob.addConfClass(CSVFormats.class);
         defaultRunjob.setRunClass(RunMapReduce.class);
         defaultRunjob.setMapperClass(MapperDemo.class);
         defaultRunjob.setReducerClass(ReducerDemo.class);
         defaultRunjob.setMapOutputKeyClass(Text.class);
         defaultRunjob.setMapOutputValueClass(JobWritable.class);
         defaultRunjob.setInputDir("hdfs:/drsn/rjb/input/");
-        defaultRunjob.setInputFileName("ja.csv");
-        defaultRunjob.addConf(ReducerDemo.LOCATIONFILEPATH, "hdfs:/drsn/rjb/input/location.txt");
-        defaultRunjob.setDelCacheDir(false);
+        defaultRunjob.setInputFileName("result_ja.csv");
+        defaultRunjob.setOutputFileName("jafinally.csv");
+//        defaultRunjob.setDelCacheDir(false);
 
         return defaultRunjob;
     }
