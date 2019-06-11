@@ -1,7 +1,5 @@
 package cn.adam.bigdata.zhaoping.analyzedata;
 
-import cn.adam.bigdata.zhaoping.analyzedata.work.MapperDemo;
-import cn.adam.bigdata.zhaoping.analyzedata.work.ReduceDemo;
 import cn.adam.bigdata.zhaoping.defaultdemo.DefaultRunjob;
 import org.apache.hadoop.io.Text;
 

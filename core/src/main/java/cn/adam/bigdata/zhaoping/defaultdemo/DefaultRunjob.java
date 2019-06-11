@@ -30,35 +30,35 @@ public class DefaultRunjob {
 	public final static String OUT = "tempout/";
 	public final static String OUTPREFIX = "result_";
 	@Getter@Setter
-	private String jobName = "test"+ Math.random();
-	private Map<String, String> confmap;
+	protected String jobName = "test"+ Math.random();
+	protected Map<String, String> confmap;
 	@Getter@Setter
-	private String cacheDir = "hdfs:/conf/";
+	protected String cacheDir = "hdfs:/conf/";
 	@Getter@Setter
-	private boolean delCacheDir = true;
+	protected boolean delCacheDir = true;
 	@Getter@Setter
-	private boolean isServer = true;
-	private Set<Class<? extends HaveConfFile>> confClass = new HashSet<>();
+	protected boolean isServer = true;
+	protected Set<Class<? extends HaveConfFile>> confClass = new HashSet<>();
 
 	@NonNull@Getter@Setter
-	private Class<?> runClass;
+	protected Class<?> runClass;
 	@NonNull@Getter@Setter
-	private Class<? extends Mapper> mapperClass;
+	protected Class<? extends Mapper> mapperClass;
 	@NonNull@Getter@Setter
-	private Class<? extends Reducer> reducerClass;
+	protected Class<? extends Reducer> reducerClass;
 	@NonNull@Getter@Setter
-	private Class<?> mapOutputKeyClass;
+	protected Class<?> mapOutputKeyClass;
 	@NonNull@Getter@Setter
-	private Class<?> mapOutputValueClass;
+	protected Class<?> mapOutputValueClass;
 
 	@NonNull@Getter@Setter
-	private String inputDir;
+	protected String inputDir;
 	@Getter@Setter
-	private String inputFileName = "";
+	protected String inputFileName = "";
 	@Getter@Setter
-	private String outputDir;
+	protected String outputDir;
 	@Getter@Setter
-	private String outputFileName;
+	protected String outputFileName;
 
 	public DefaultRunjob(){
 		confmap = new HashMap<>();
@@ -75,7 +75,11 @@ public class DefaultRunjob {
 		this.confClass.clear();
 		run();
 	}
-	private void run() {
+
+	protected void setJob(Job job) throws IOException {
+	}
+
+	protected void run() {
 		Configuration configuration = new Configuration();
 
 		for (Map.Entry<String, String> e : this.confmap.entrySet())
@@ -104,8 +108,9 @@ public class DefaultRunjob {
 
 			if (!this.inputDir.endsWith("/"))
 				this.inputDir+="/";
-			FileInputFormat.addInputPath(job,
-					new Path(this.inputDir+this.inputFileName));
+
+			Path in = new Path(this.inputDir+this.inputFileName);
+
 			if (this.outputDir == null)
 				this.outputDir = this.inputDir+OUT;
 			else if (!this.outputDir.endsWith("/"))
@@ -115,7 +120,10 @@ public class DefaultRunjob {
 			if (fs.exists(out)) {
 				fs.delete(out, true);
 			}
+
+			FileInputFormat.addInputPath(job, in);
 			FileOutputFormat.setOutputPath(job, out);
+			setJob(job);
 			boolean f = job.waitForCompletion(true);
 			if (f) {
 				FileStatus[] fileStatuses = fs.listStatus(out);
@@ -147,7 +155,7 @@ public class DefaultRunjob {
 
 	}
 
-	private void updateConfFileToHDFS(FileSystem fs, Configuration configuration){
+	protected void updateConfFileToHDFS(FileSystem fs, Configuration configuration){
 //		configuration.set(HAVECONFDIR, cacheDir);
 //		HaveConfFileTemp.setConfDir(new Path(cacheDir));
 		Path hdfsCachePath = new Path(cacheDir);
@@ -177,7 +185,7 @@ public class DefaultRunjob {
 
 	}
 
-	private void checkConf(){
+	protected void checkConf(){
 		if (Utils.haveNull(this.runClass, this.mapperClass, this.reducerClass,
 				this.mapOutputKeyClass, this.mapOutputValueClass, this.inputDir))
 			throw new RuntimeException("配置不全，请补全！");
