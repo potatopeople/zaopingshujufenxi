@@ -61,8 +61,8 @@ public class WordHandle extends HaveConfFileTemp implements Handle<JobWritable> 
                     String s = itsc.nextLine();
                     if (s == null || s.equals(""))
                         continue;
-                    String[] ss = s.split("\t");
-                    for (String word : ss[1].split("=")) {
+                    String[] ss = s.split("\t", -1);
+                    for (String word : ss[1].split("=",-1)) {
                         ITWORDS.put(word, ss[0]);
                         DicLibrary.insert(DicLibrary.DEFAULT, word);
                         log.debug(word);

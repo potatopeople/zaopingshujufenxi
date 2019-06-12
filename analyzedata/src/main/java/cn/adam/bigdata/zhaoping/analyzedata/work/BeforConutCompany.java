@@ -2,6 +2,7 @@ package cn.adam.bigdata.zhaoping.analyzedata.work;
 
 import cn.adam.bigdata.zhaoping.defaultdemo.DefaultMapper;
 import cn.adam.bigdata.zhaoping.defaultdemo.DefaultReducer;
+import cn.adam.bigdata.zhaoping.defaultdemo.DefaultRunjob;
 import cn.adam.bigdata.zhaoping.entity.CSVFormats;
 import cn.adam.bigdata.zhaoping.util.Utils;
 import cn.adam.bigdata.zhaoping.writable.JobWritable;
@@ -12,7 +13,27 @@ import org.apache.hadoop.io.Text;
 
 import java.io.IOException;
 
-public class BeforConutCompany {
+public class BeforConutCompany extends DefaultRunjob {
+    public static void main(String[] args) {
+        DefaultRunjob conf = conf();
+        conf.runForLocal();
+    }
+    public static DefaultRunjob conf(){
+        BeforConutCompany defaultRunjob = new BeforConutCompany();
+
+        defaultRunjob.setCacheDir("hdfs:/drsn/rjb/conf/");
+//        defaultRunjob.addConfClass(CSVFormats.class);
+        defaultRunjob.setRunClass(BeforConutCompany.class);
+        defaultRunjob.setMapperClass(BeforConutCompanyMapper.class);
+        defaultRunjob.setReducerClass(BeforConutCompanyReducer.class);
+        defaultRunjob.setMapOutputKeyClass(Text.class);
+        defaultRunjob.setMapOutputValueClass(Text.class);
+        defaultRunjob.setInputDir("hdfs:/drsn/rjb/input/");
+        defaultRunjob.setInputFileName("jafinally.csv");
+        defaultRunjob.setOutputFileName("jtmp.csv");
+        return defaultRunjob;
+    }
+
     static class BeforConutCompanyMapper extends DefaultMapper<LongWritable, Text, Text, Text>{
 
         @Override

@@ -75,7 +75,7 @@ public class ReducerDemo extends DefaultReducer<Text, JobWritable, Text, NullWri
 	public static Location getLocation(String s) throws IOException {
 		Location location = new Location();
 		s = s.replaceAll("\\[]", "");
-		String[] ss = s.split("\t");
+		String[] ss = s.split("\t",-1);
 
 		if (ss[0].equals(""))return null;
 		location.setProvince(ss[0]);

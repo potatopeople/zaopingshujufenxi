@@ -151,7 +151,7 @@ public class MainClass {
                 location1.setProvince(jsonObject1.getString("province"));
                 location1.setCity(jsonObject1.getString("city"));
                 location1.setDistrict(jsonObject1.getString("district"));
-                String[] locations = jsonObject1.getString("location").split(",");
+                String[] locations = jsonObject1.getString("location").split(",",-1);
                 if (locations != null) {
                     location1.setLongitude(Double.parseDouble(locations[0]));
                     location1.setLatitude(Double.parseDouble(locations[1]));

@@ -38,6 +38,8 @@ public class DefaultRunjob {
 	protected boolean delCacheDir = true;
 	@Getter@Setter
 	protected boolean isServer = true;
+	@Getter@Setter
+	protected boolean moveoutfile = true;
 	protected Set<Class<? extends HaveConfFile>> confClass = new HashSet<>();
 
 	@NonNull@Getter@Setter
@@ -126,23 +128,25 @@ public class DefaultRunjob {
 			setJob(job);
 			boolean f = job.waitForCompletion(true);
 			if (f) {
-				FileStatus[] fileStatuses = fs.listStatus(out);
-				for (FileStatus fileStatus : fileStatuses) {
-					Path outfilepath = fileStatus.getPath();
-					if (outfilepath.getName().startsWith("part")) {
-						StringBuilder sb = new StringBuilder();
-						if (this.outputDir.equals(this.inputDir+OUT))
-							sb.append(this.inputDir);
-						else
-							sb.append(this.outputDir);
-						if (this.outputFileName == null)
-							sb.append(OUTPREFIX + this.inputFileName);
-						else
-							sb.append(this.outputFileName);
-						Path op = new Path(sb.toString());
-						if (fs.exists(op))
-							fs.delete(op, true);
-						fs.rename(outfilepath, op);
+				if (moveoutfile) {
+					FileStatus[] fileStatuses = fs.listStatus(out);
+					for (FileStatus fileStatus : fileStatuses) {
+						Path outfilepath = fileStatus.getPath();
+						if (outfilepath.getName().startsWith("part")) {
+							StringBuilder sb = new StringBuilder();
+							if (this.outputDir.equals(this.inputDir + OUT))
+								sb.append(this.inputDir);
+							else
+								sb.append(this.outputDir);
+							if (this.outputFileName == null)
+								sb.append(OUTPREFIX + this.inputFileName);
+							else
+								sb.append(this.outputFileName);
+							Path op = new Path(sb.toString());
+							if (fs.exists(op))
+								fs.delete(op, true);
+							fs.rename(outfilepath, op);
+						}
 					}
 				}
 				log.info("sucsses");

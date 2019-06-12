@@ -35,10 +35,11 @@ public class AfterJobAnalyze extends DefaultRunjob{
         defaultRunjob.setMapperClass(AfterAnalyzeMapper.class);
         defaultRunjob.setReducerClass(AfterAnalyzReducer.class);
         defaultRunjob.setMapOutputKeyClass(Text.class);
-        defaultRunjob.setMapOutputValueClass(NullWritable.class);
+        defaultRunjob.setMapOutputValueClass(Text.class);
         defaultRunjob.setInputDir("hdfs:/drsn/rjb/input/");
-        defaultRunjob.setInputFileName("jafinally.csv");
-        defaultRunjob.setOutputFileName("jtmp.csv");
+        defaultRunjob.setInputFileName("jtmp.csv");
+        defaultRunjob.setOutputDir("hdfs:/drsn/rjb/input/analyzeout/");
+        defaultRunjob.setMoveoutfile(false);
         return defaultRunjob;
     }
 
@@ -51,13 +52,13 @@ public class AfterJobAnalyze extends DefaultRunjob{
 
         @Override
         protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-            String[] vs = value.toString().split("\t");
+            String[] vs = value.toString().split("\t",-1);
             String k = vs[0]+"\t"+
                     vs[1];
             if (vs[0].equals("info")||vs[0].equals("welfare")){
                 k = k +"\t"+ vs[2];
             }
-            context.write(new Text(k), value);
+            context.write(new Text(k), new Text(value.toString()));
         }
     }
 
@@ -65,12 +66,12 @@ public class AfterJobAnalyze extends DefaultRunjob{
         private MultipleOutputs<Text, NullWritable> outputs;
         @Override
         protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-            String[] vs = key.toString().split("\t");
+            String[] vs = key.toString().split("\t",-1);
             if (vs[0].equals("jobtag")){
                 Integer all = null;
                 List<CountValue> l = new ArrayList<>();
                 for (Text t : values) {
-                    String[] split = t.toString().split("\t");
+                    String[] split = t.toString().split("\t",-1);
                     int i = Integer.parseInt(split[3]);
                     if (split[2].equals("ALL"))
                         all = i;
@@ -80,9 +81,8 @@ public class AfterJobAnalyze extends DefaultRunjob{
                 }
 
                 Collections.sort(l);
-                for (int i = 10; i < l.size(); i++) {
-                    l.remove(i);
-                }
+
+                l = l.subList(0, 10>l.size()?l.size():10);
 
                 String json = JSONObject.toJSONString(l);
                 outputs.write(new Text(vs[1]+"\t"+json), NullWritable.get(), "jobtag");
@@ -92,7 +92,7 @@ public class AfterJobAnalyze extends DefaultRunjob{
             }else if (vs[0].equals("edu")){
                 List<CountValue> l = new ArrayList<>();
                 for (Text t : values) {
-                    String[] split = t.toString().split("\t");
+                    String[] split = t.toString().split("\t",-1);
                     int i = Integer.parseInt(split[3]);
                     l.add(new CountValue(split[2], i));
                 }
@@ -102,7 +102,7 @@ public class AfterJobAnalyze extends DefaultRunjob{
             }else if (vs[0].equals("exp")){
                 List<XYValue> l = new ArrayList<>();
                 for (Text t : values) {
-                    String[] split = t.toString().split("\t");
+                    String[] split = t.toString().split("\t",-1);
                     int i = Integer.parseInt(split[3]);
                     int j = Integer.parseInt(split[2]);
                     l.add(new XYValue(j, i));
@@ -113,7 +113,7 @@ public class AfterJobAnalyze extends DefaultRunjob{
             }else if (vs[0].equals("sandiantu")){
                 List<XYVValue> l = new ArrayList<>();
                 for (Text t : values) {
-                    String[] split = t.toString().split("\t");
+                    String[] split = t.toString().split("\t",-1);
                     int i = Integer.parseInt(split[3]);
                     int j = Integer.parseInt(split[4]);
                     int h = Integer.parseInt(split[2]);
@@ -125,7 +125,7 @@ public class AfterJobAnalyze extends DefaultRunjob{
             }else if (vs[0].equals("sandiantu2")){
                 List<XYZVValue> l = new ArrayList<>();
                 for (Text t : values) {
-                    String[] split = t.toString().split("\t");
+                    String[] split = t.toString().split("\t",-1);
                     int i = Integer.parseInt(split[3]);
                     int j = Integer.parseInt(split[5]);
                     int h = Integer.parseInt(split[2]);
@@ -137,7 +137,7 @@ public class AfterJobAnalyze extends DefaultRunjob{
             }else if (vs[0].equals("info")){
                 List<CountValue> l = new ArrayList<>();
                 for (Text t : values) {
-                    String[] split = t.toString().split("\t");
+                    String[] split = t.toString().split("\t",-1);
                     int i = Integer.parseInt(split[4]);
                     l.add(new CountValue(split[3], i));
                 }
@@ -146,16 +146,15 @@ public class AfterJobAnalyze extends DefaultRunjob{
                 int i = 10;
                 if (vs[2].equals("ALL"))
                     i = 20;
-                for (; i < l.size(); i++) {
-                    l.remove(i);
-                }
+
+                l = l.subList(0, i>l.size()?l.size():i);
 
                 String json = JSONObject.toJSONString(l);
                 outputs.write(new Text(vs[1]+"\t"+vs[2]+"\t"+json), NullWritable.get(), "info");
             }else if (vs[0].equals("welfare")){
                 List<CountValue> l = new ArrayList<>();
                 for (Text t : values) {
-                    String[] split = t.toString().split("\t");
+                    String[] split = t.toString().split("\t",-1);
                     int i = Integer.parseInt(split[4]);
                     l.add(new CountValue(split[3], i));
                 }
@@ -164,9 +163,8 @@ public class AfterJobAnalyze extends DefaultRunjob{
                 int i = 10;
                 if (vs[2].equals("ALL"))
                     i = 20;
-                for (; i < l.size(); i++) {
-                    l.remove(i);
-                }
+
+                l = l.subList(0, i>l.size()?l.size():i);
 
                 String json = JSONObject.toJSONString(l);
                 outputs.write(new Text(vs[1]+"\t"+vs[2]+"\t"+json), NullWritable.get(), "welfare");
