@@ -24,6 +24,10 @@ public class RunAnalyzeMapReduce {
         conf = AfterConutCompany.conf();
         run();
 
+
+        conf = PutToHbase.conf();
+        run();
+
     }
     static void run(){
         conf.runForRemote("D:\\data\\code\\idea\\zaopingshujufenxi" +

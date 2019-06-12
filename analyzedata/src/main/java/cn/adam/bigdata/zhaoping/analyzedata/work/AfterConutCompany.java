@@ -9,9 +9,6 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.lib.output.LazyOutputFormat;
-import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
-import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,14 +32,15 @@ public class AfterConutCompany extends DefaultRunjob {
         defaultRunjob.setMapOutputValueClass(Text.class);
         defaultRunjob.setInputDir("hdfs:/drsn/rjb/input/");
         defaultRunjob.setInputFileName("jtmp.csv");
-        defaultRunjob.setOutputDir("hdfs:/drsn/rjb/input/companyanalyzeout/");
-        defaultRunjob.setMoveoutfile(false);
+        defaultRunjob.setOutputFileName("analyzeresult_countcompany.txt");
+//        defaultRunjob.setOutputDir("hdfs:/drsn/rjb/input/companyanalyzeout/");
+//        defaultRunjob.setMoveoutfile(false);
         return defaultRunjob;
     }
 
     @Override
     protected void setJob(Job job) throws IOException {
-        LazyOutputFormat.setOutputFormatClass(job, TextOutputFormat.class);
+//        LazyOutputFormat.setOutputFormatClass(job, TextOutputFormat.class);
     }
 
     static class AfterConutCompanyMapper extends DefaultMapper<LongWritable, Text, Text, Text>{
@@ -59,15 +57,21 @@ public class AfterConutCompany extends DefaultRunjob {
 
     static class AfterConutCompanyReducer extends DefaultReducer<Text, Text, Text, NullWritable>{
 
-        private MultipleOutputs<Text, NullWritable> outputs;
+//        private MultipleOutputs<Text, NullWritable> outputs;
+//        private HbaseUtils hbase;
         @Override
         protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
             String[] vs = key.toString().split("\t",-1);
+            String out;
             if (vs[0].equals("company")){
                 for (Text t : values) {
                     String[] ts = t.toString().split("\t",-1);
                     int i = Integer.parseInt(ts[2]);
-                    outputs.write(new Text(ts[1]+"\t"+i), NullWritable.get(), "company");
+
+//                    hbase.put("job", ts[1], "count", "company", i);
+                    out = ts[1] + "\tcount\tcompany\t"+i;
+                    context.write(new Text(out), NullWritable.get());
+//                    outputs.write(new Text(out), NullWritable.get(), "company");
                 }
             }else if (vs[0].equals("nature")){
                 List<CountValue> l = new ArrayList<>();
@@ -82,7 +86,11 @@ public class AfterConutCompany extends DefaultRunjob {
                 l = l.subList(0, 10>l.size()?l.size():10);
 
                 String json = JSONObject.toJSONString(l);
-                outputs.write(new Text(vs[1]+"\t"+json), NullWritable.get(), "nature");
+
+//                hbase.put("job", vs[1], "rank", "nature", json);
+                out = vs[1] + "\trank\tnature\t"+json;
+                context.write(new Text(out), NullWritable.get());
+//                outputs.write(new Text(out), NullWritable.get(), "nature");
             }else if (vs[0].equals("industry")){
                 List<CountValue> l = new ArrayList<>();
                 for (Text t : values) {
@@ -96,20 +104,29 @@ public class AfterConutCompany extends DefaultRunjob {
                 l = l.subList(0, 10>l.size()?l.size():10);
 
                 String json = JSONObject.toJSONString(l);
-                outputs.write(new Text(vs[1]+"\t"+json), NullWritable.get(), "industry");
+
+//                hbase.put("job", vs[1], "rank", "industry", json);
+                out = vs[1] + "\trank\tindustry\t"+json;
+                context.write(new Text(out), NullWritable.get());
+//                outputs.write(new Text(out), NullWritable.get(), "industry");
             }
         }
 
         @Override
         protected void setup(Context context) throws IOException, InterruptedException {
             super.setup(context);
-            outputs = new MultipleOutputs<>(context);
+//            outputs = new MultipleOutputs<>(context);
+//            hbase = HbaseUtils.getInstance();
+//            if (!hbase.tableExists("job"))
+//                hbase.tableCreate("job", false, "count",
+//                        "rank", "radarchart", "scatterplot", "info", "welfare");
         }
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
             super.cleanup(context);
-            outputs.close();
+//            outputs.close();
+//            hbase.close();
         }
     }
 

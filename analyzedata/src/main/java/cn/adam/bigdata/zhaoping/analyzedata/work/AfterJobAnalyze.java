@@ -12,9 +12,6 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.lib.output.LazyOutputFormat;
-import org.apache.hadoop.mapreduce.lib.output.MultipleOutputs;
-import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,14 +35,15 @@ public class AfterJobAnalyze extends DefaultRunjob{
         defaultRunjob.setMapOutputValueClass(Text.class);
         defaultRunjob.setInputDir("hdfs:/drsn/rjb/input/");
         defaultRunjob.setInputFileName("jtmp.csv");
-        defaultRunjob.setOutputDir("hdfs:/drsn/rjb/input/analyzeout/");
-        defaultRunjob.setMoveoutfile(false);
+        defaultRunjob.setOutputFileName("analyzeresult_job.txt");
+//        defaultRunjob.setOutputDir("hdfs:/drsn/rjb/input/analyzeout/");
+//        defaultRunjob.setMoveoutfile(false);
         return defaultRunjob;
     }
 
     @Override
     protected void setJob(Job job) throws IOException {
-        LazyOutputFormat.setOutputFormatClass(job, TextOutputFormat.class);
+//        LazyOutputFormat.setOutputFormatClass(job, TextOutputFormat.class);
     }
 
     static class AfterAnalyzeMapper extends DefaultMapper<LongWritable, Text, Text, Text>{
@@ -63,10 +61,12 @@ public class AfterJobAnalyze extends DefaultRunjob{
     }
 
     static class AfterAnalyzReducer extends DefaultReducer<Text, Text, Text, NullWritable>{
-        private MultipleOutputs<Text, NullWritable> outputs;
+//        private MultipleOutputs<Text, NullWritable> outputs;
+//        private HbaseUtils hbase;
         @Override
         protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
             String[] vs = key.toString().split("\t",-1);
+            String out;
             if (vs[0].equals("jobtag")){
                 Integer all = null;
                 List<CountValue> l = new ArrayList<>();
@@ -85,9 +85,16 @@ public class AfterJobAnalyze extends DefaultRunjob{
                 l = l.subList(0, 10>l.size()?l.size():10);
 
                 String json = JSONObject.toJSONString(l);
-                outputs.write(new Text(vs[1]+"\t"+json), NullWritable.get(), "jobtag");
+
+//                hbase.put("job", vs[1], "rank", "jobtag", json);
+                out = vs[1]+"\trank\tjobtag\t"+json;
+//                outputs.write(new Text(out), NullWritable.get(), "jobtag");
+                context.write(new Text(out), NullWritable.get());
                 if (all != null) {
-                    outputs.write(new Text(vs[1] + "\tALL\t" + all), NullWritable.get(), "jobtag");
+//                    hbase.put("job", vs[1], "count", "jobtag", all);
+                    out = vs[1]+"\tcount\tjobtag\t"+all;
+//                    outputs.write(new Text(out), NullWritable.get(), "jobtag");
+                    context.write(new Text(out), NullWritable.get());
                 }
             }else if (vs[0].equals("edu")){
                 List<CountValue> l = new ArrayList<>();
@@ -98,7 +105,11 @@ public class AfterJobAnalyze extends DefaultRunjob{
                 }
 
                 String json = JSONObject.toJSONString(l);
-                outputs.write(new Text(vs[1]+"\t"+json), NullWritable.get(), "edu");
+
+//                hbase.put("job", vs[1], "radarchart", "edu", json);
+                out = vs[1]+"\tradarchart\tedu\t"+json;
+//                outputs.write(new Text(out), NullWritable.get(), "edu");
+                context.write(new Text(out), NullWritable.get());
             }else if (vs[0].equals("exp")){
                 List<XYValue> l = new ArrayList<>();
                 for (Text t : values) {
@@ -109,7 +120,11 @@ public class AfterJobAnalyze extends DefaultRunjob{
                 }
 
                 String json = JSONObject.toJSONString(l);
-                outputs.write(new Text(vs[1]+"\t"+json), NullWritable.get(), "exp");
+
+//                hbase.put("job", vs[1], "radarchart", "exp", json);
+                out = vs[1]+"\tradarchart\texp\t"+json;
+//                outputs.write(new Text(out), NullWritable.get(), "exp");
+                context.write(new Text(out), NullWritable.get());
             }else if (vs[0].equals("sandiantu")){
                 List<XYVValue> l = new ArrayList<>();
                 for (Text t : values) {
@@ -121,7 +136,11 @@ public class AfterJobAnalyze extends DefaultRunjob{
                 }
 
                 String json = JSONObject.toJSONString(l);
-                outputs.write(new Text(vs[1]+"\t"+json), NullWritable.get(), "sandiantu");
+
+//                hbase.put("job", vs[1], "scatterplot", "ees", json);
+                out = vs[1]+"\tscatterplot\tees\t"+json;
+//                outputs.write(new Text(out), NullWritable.get(), "sandiantu");
+                context.write(new Text(out), NullWritable.get());
             }else if (vs[0].equals("sandiantu2")){
                 List<XYZVValue> l = new ArrayList<>();
                 for (Text t : values) {
@@ -133,7 +152,11 @@ public class AfterJobAnalyze extends DefaultRunjob{
                 }
 
                 String json = JSONObject.toJSONString(l);
-                outputs.write(new Text(vs[1]+"\t"+json), NullWritable.get(), "sandiantu2");
+
+//                hbase.put("job", vs[1], "scatterplot", "eesj", json);
+                out = vs[1]+"\tscatterplot\teesj\t"+json;
+//                outputs.write(new Text(out), NullWritable.get(), "sandiantu2");
+                context.write(new Text(out), NullWritable.get());
             }else if (vs[0].equals("info")){
                 List<CountValue> l = new ArrayList<>();
                 for (Text t : values) {
@@ -150,7 +173,15 @@ public class AfterJobAnalyze extends DefaultRunjob{
                 l = l.subList(0, i>l.size()?l.size():i);
 
                 String json = JSONObject.toJSONString(l);
-                outputs.write(new Text(vs[1]+"\t"+vs[2]+"\t"+json), NullWritable.get(), "info");
+
+                if (vs[2].equals("ALL"))
+                    out = vs[1]+"\trank\tinfo\t"+json;
+//                   hbase.put("job", vs[1], "rank", "info", json);
+                else
+                    out = vs[1]+"\tinfo\t"+vs[2]+"\t"+json;
+//                    hbase.put("job", vs[1], "info", vs[2], json);
+//                outputs.write(new Text(out), NullWritable.get(), "info");
+                context.write(new Text(out), NullWritable.get());
             }else if (vs[0].equals("welfare")){
                 List<CountValue> l = new ArrayList<>();
                 for (Text t : values) {
@@ -167,20 +198,35 @@ public class AfterJobAnalyze extends DefaultRunjob{
                 l = l.subList(0, i>l.size()?l.size():i);
 
                 String json = JSONObject.toJSONString(l);
-                outputs.write(new Text(vs[1]+"\t"+vs[2]+"\t"+json), NullWritable.get(), "welfare");
+
+//                if (vs[2].equals("ALL"))
+//                    hbase.put("job", vs[1], "rank", "welfare", json);
+//                else
+//                    hbase.put("job", vs[1], "welfare", vs[2], json);
+                if (vs[2].equals("ALL"))
+                    out = vs[1]+"\trank\twelfare\t"+json;
+                else
+                    out = vs[1]+"\twelfare\t"+vs[2]+"\t"+json;
+//                outputs.write(new Text(out), NullWritable.get(), "welfare");
+                context.write(new Text(out), NullWritable.get());
             }
         }
 
         @Override
         protected void setup(Context context) throws IOException, InterruptedException {
             super.setup(context);
-            outputs = new MultipleOutputs<>(context);
+//            outputs = new MultipleOutputs<>(context);
+//            hbase = HbaseUtils.getInstance();
+//            if (!hbase.tableExists("job"))
+//                hbase.tableCreate("job", false, "count",
+//                        "rank", "radarchart", "scatterplot", "info", "welfare");
         }
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
             super.cleanup(context);
-            outputs.close();
+//            outputs.close();
+//            hbase.close();
         }
     }
 }
