@@ -7,7 +7,7 @@ public class RunAnalyzeMapReduce {
 
     static DefaultRunjob conf;
     public static void main(String[] args) {
-        System.setProperty("hadoop.home.dir", "D:\\program\\greensoft\\hadoop-2.7.5");
+//        System.setProperty("hadoop.home.dir", "D:\\program\\greensoft\\hadoop-2.7.5");
 
         conf = JobAnalyze.conf();
         run();

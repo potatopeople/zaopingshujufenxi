@@ -1,7 +1,6 @@
 package cn.adam.bigdata.zhaoping.locationget;
 
 import cn.adam.bigdata.zhaoping.defaultdemo.DefaultRunjob;
-import cn.adam.bigdata.zhaoping.entity.CSVFormats;
 import cn.adam.bigdata.zhaoping.locationget.work.MapperDemo;
 import cn.adam.bigdata.zhaoping.locationget.work.ReducerDemo;
 import cn.adam.bigdata.zhaoping.writable.JobWritable;
@@ -9,7 +8,14 @@ import org.apache.hadoop.io.Text;
 
 public class RunMapReduce {
     public static void main(String[] args) {
-        conf().runForLocal();
+        DefaultRunjob conf = conf();
+        conf.addConf(ReducerDemo.LOCATIONFILEPATH, "hdfs:/drsn/rjb/input/lfromlocation.txt");
+        conf.runForLocal();
+
+        conf.addConf(ReducerDemo.LOCATIONFILEPATH, "hdfs:/drsn/rjb/input/lfromcname.txt");
+        conf.addConf(ReducerDemo.LOCATIONDROM, "cname");
+        conf.setInputFileName("jafinally.csv");
+        conf.runForLocal();
     }
 
     public static DefaultRunjob conf(){
@@ -23,7 +29,7 @@ public class RunMapReduce {
         defaultRunjob.setMapOutputKeyClass(Text.class);
         defaultRunjob.setMapOutputValueClass(JobWritable.class);
         defaultRunjob.setInputDir("hdfs:/drsn/rjb/input/");
-        defaultRunjob.setInputFileName("result_ja.csv");
+        defaultRunjob.setInputFileName("afterhandle.csv");
         defaultRunjob.setOutputFileName("jafinally.csv");
 //        defaultRunjob.setDelCacheDir(false);
 

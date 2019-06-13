@@ -81,13 +81,20 @@ public class DefaultRunjob {
 	protected void setJob(Job job) throws IOException {
 	}
 
+	protected void setConfiguration(Configuration conf) {
+	}
+
 	protected void run() {
 		Configuration configuration = new Configuration();
-
+//		configuration.setBoolean("dfs.support.append", true);// 允许追加
+//		configuration.set("hadoop.user", "root");//设置用户
+//		configuration.setBoolean("mapreduce.app-submission.cross-platform", true);
+//		configuration.set("fs.hdfs.impl", "org.apache.hadoop.hdfs.DistributedFileSystem");
 		for (Map.Entry<String, String> e : this.confmap.entrySet())
 			configuration.set(e.getKey(), e.getValue());
 
 		configuration.set("dfs.permissions","false");
+		setConfiguration(configuration);
 		Job job;
 		
 		try {

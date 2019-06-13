@@ -42,7 +42,10 @@ public class ReducerDemo extends DefaultReducer<Text, JobWritable, Text, NullWri
 				j.setCompany_location_longitude(location.getLongitude().toString());
 				j.setCompany_location_latitude(location.getLatitude().toString());
 			}
-            Utils.emptyFieldToNull(j);
+			String p = j.getCompany_location_province();
+			if (p!=null&&p.contains("\uFEFF"))
+				j.setCompany_location_province(p.replaceAll("\uFEFF", ""));
+			Utils.emptyFieldToNull(j);
 			context.write(new Text(j.toString()), NullWritable.get());
 		}
 

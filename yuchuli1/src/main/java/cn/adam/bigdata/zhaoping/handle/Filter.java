@@ -2,18 +2,18 @@ package cn.adam.bigdata.zhaoping.handle;
 
 import cn.adam.bigdata.zhaoping.basic.Handle;
 import cn.adam.bigdata.zhaoping.entity.FieldMatch;
+import cn.adam.bigdata.zhaoping.util.Utils;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class Filter implements Handle<List<String>> {
 
-    private final int[] x = {0, 6, 7, 8, 11};
+    private final Integer[] x = {0, 6, 7, 8, 11};
 
     @Override
     public void handle(List<String> list) {
         for (int i = 0; i < list.size(); i++) {
-            boolean is = binarySearch(x, i) >= 0;
+            boolean is = Utils.binarySearch(x, i) >= 0;
             list.set(i, work(list.get(i), is));
         }
     }

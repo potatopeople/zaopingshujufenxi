@@ -25,6 +25,11 @@ public class MapperDemo extends DefaultMapper<LongWritable, Text, Text, JobWrita
 
 		if ("company_financing_stage".equals(jobWritable.getCompany_financing_stage()))
 			return;
+		if (jobWritable.getJob_info() == null||jobWritable.getJob_info().equals("")||
+			jobWritable.getJob_name() == null||jobWritable.getJob_name().equals("")||
+				jobWritable.getJob_name().contains("实习")
+		)
+			return;
 		for (Handle<JobWritable> h : handles) {
 			h.handle(jobWritable);
 		}

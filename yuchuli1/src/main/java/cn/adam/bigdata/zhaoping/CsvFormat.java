@@ -11,9 +11,10 @@ import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Scanner;
 
 @Slf4j
 public class CsvFormat {
@@ -21,9 +22,15 @@ public class CsvFormat {
     static {
         log.info("初始化!");
         try {
-            URL url = CsvFormat.class.getClassLoader().getResource(".");
-            assert url != null;
-            File f = new File(url.toURI());
+//            URL url = CsvFormat.class.getClassLoader().getResource(".");
+            Scanner sc = new Scanner(System.in);
+            System.out.println("输入文件夹地址：");
+            String s = sc.nextLine();
+//            assert url != null;
+//            File f = new File(url.toURI());
+            File f = new File(s);
+            URL url = f.toURI().toURL();
+
             files = f.listFiles((dir, name) -> name.startsWith("job") && name.endsWith(".csv"));
 
             out = new File(url.getPath()+"out/ja.csv");
@@ -32,7 +39,7 @@ public class CsvFormat {
                     new Filter(),
                     new Correction()
             };
-        } catch (URISyntaxException e) {
+        } catch (Exception e) {
             log.error("初始化时出错！", e);
             files = new File[0];
         }
@@ -60,7 +67,7 @@ public class CsvFormat {
                 return;
             }
         }
-        try (Writer writer = new FileWriter(out)){
+        try (Writer writer = new PrintWriter(out, "UTF-8")){
             CSVPrinter printer = new CSVPrinter(writer, CSVFormat.DEFAULT);
             for (File f : files) {
                 csv.work(f, printer);
@@ -75,8 +82,8 @@ public class CsvFormat {
     private boolean first = true;
     private void work(File f, CSVPrinter printer){
         log.info("处理文件: " + f.getName());
-        try (Reader reader = new FileReader(f)) {
-            CSVParser csvParser = new CSVParser(reader,CSVFormat.DEFAULT);
+        try  {
+            CSVParser csvParser = CSVParser.parse(f, Charset.forName("UTF-8"),CSVFormat.DEFAULT);
 
             for (CSVRecord record : csvParser) {
                 List<String> list = Utils.csvstrRecordToList(record);

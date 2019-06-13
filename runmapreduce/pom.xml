@@ -18,16 +18,19 @@
             <groupId>cn.adam.bigdata.zhaoping</groupId>
             <artifactId>handlemapreduce</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <!--<scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>cn.adam.bigdata.zhaoping</groupId>
             <artifactId>locationget</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <!--<scope>provided</scope>-->
         </dependency>
         <dependency>
             <groupId>cn.adam.bigdata.zhaoping</groupId>
             <artifactId>analyzedata</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <!--<scope>provided</scope>-->
         </dependency>
 
         <!-- hadoop -->
@@ -78,7 +81,7 @@
             <groupId>org.apache.hadoop</groupId>
             <artifactId>hadoop-hdfs</artifactId>
             <version>${hadoop.version}</version>
-            <optional>true</optional>
+            <!--<optional>true</optional>-->
         </dependency>
         <!-- yarn -->
         <dependency>
@@ -111,4 +114,31 @@
 
 
     </dependencies>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>2.4.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>cn.adam.bigdata.zhaoping.runmr.Run</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
 </project>

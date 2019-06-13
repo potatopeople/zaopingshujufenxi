@@ -16,24 +16,24 @@ import java.util.concurrent.*;
 
 public class MainClass {
     private static String[] tencentKey = {
-            "VLABZ-TJNKF-326JS-NW6NB-H7Y6S-DJBVA",     //王恒兴
-            "UXRBZ-UUI6X-FJI4B-ZJABP-KPZDS-6EBQD",  //缑鑫
-            "UA4BZ-YB3WP-PSADF-VFOYF-N2HP5-JDBVY",   //喵喵
-            "7YCBZ-N2BWX-WJV44-ZSZES-REMDK-4WB6B",
-            "NOZBZ-A4K63-55A3S-3U5GB-LU7L7-VWFHI",
-            "3WIBZ-6JKCX-WCW4Q-TBGOX-SRMOV-XVBVY",
-            "INDBZ-CML6I-2RGGN-5CSBS-IG44V-WLBT6",
-            "PE5BZ-HXY6P-TZZDM-VRBKC-ASDPJ-MHF26",
-            "UHABZ-TBOWX-LJH4U-ZYUA3-6H5D6-MPBNJ"
+            "VLABZ-TJNKF-326JS-NW6NB-H7Y6S-*****",     //王恒兴
+            "UXRBZ-UUI6X-FJI4B-ZJABP-KPZDS-*****",  //缑鑫
+            "UA4BZ-YB3WP-PSADF-VFOYF-N2HP5-*****",   //喵喵
+            "7YCBZ-N2BWX-WJV44-ZSZES-REMDK-*****",
+            "NOZBZ-A4K63-55A3S-3U5GB-LU7L7-*****",
+            "3WIBZ-6JKCX-WCW4Q-TBGOX-SRMOV-*****",
+            "INDBZ-CML6I-2RGGN-5CSBS-IG44V-*****",
+            "PE5BZ-HXY6P-TZZDM-VRBKC-ASDPJ-*****",
+            "UHABZ-TBOWX-LJH4U-ZYUA3-6H5D6-*****"
     };
 
 
     private static String[] amapKeys = {
-            "1e9534ddb6fc5c4ee9bf4d6f746ec71c",
-            "f362bce4a14082653c56292ae23c1d89",
-            "8f49272e49c67040245a35fab7a59155",
-            "c9857e7adc149acc6d783d29d00acf05",
-            "5aec35ad705af96d49970176e73317bf"
+            "1e9534ddb6fc5c4ee9bf4d6f74******",
+            "f362bce4a14082653c56292ae2******",
+            "8f49272e49c67040245a35fab7******",
+            "c9857e7adc149acc6d783d29d0******",
+            "5aec35ad705af96d49970176e7******"
     };
 
     static ExecutorService executorService = Executors.newFixedThreadPool(3);

@@ -39,6 +39,7 @@ public class HbaseService {
         return null;
     }
     public String getString(String location, String cf, String cn){
+        if (location==null||location.replaceAll("\\s", "").equals(""))return null;
         try {
             Result result = hbase.get("job", location, cf, cn);
             Cell[] cells = result.rawCells();
@@ -53,6 +54,7 @@ public class HbaseService {
     }
 
     public List<KValuve> getGroup(String location, String cf) {
+        if (location==null||location.replaceAll("\\s", "").equals(""))return null;
         try {
             Result result = hbase.get("job", location, cf);
             Cell[] cells = result.rawCells();
