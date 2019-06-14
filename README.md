@@ -263,34 +263,34 @@ public class DefaultController {
 	界面：
 	总体界面：
 
-![1560469784203](img\1560469784203.png)
+![1560469784203](corepom\src\main\resources\img\1560469784203.png)
 	1) 各省的公司数量分布。
 	2) 各省发布的职位数量分布。
-![1560459838972](img\1560459838972.png)
+![1560459838972](corepom\src\main\resources\img\1560459838972.png)
 	3) 全国的各职位所需掌握的前10位技能点排名。
 	4) 全国/各省的各职位的前10位职位福利排名。
-![前10技能点/福利排名](img\1.png)
-![前10技能点/福利关系](img\5.png)
+![前10技能点/福利排名](corepom\src\main\resources\img\1.png)
+![前10技能点/福利关系](corepom\src\main\resources\img\5.png)
 
 	5) 全国/各省的所有职位的前20技能点排名。
-![前20技能点排名](img\2.png)
+![前20技能点排名](corepom\src\main\resources\img\2.png)
 
 	6) 全国/各省的所有职位的前20位职位福利排名。
 	7) 全国/各省的前10位职位排名。
-![前10职位排名](img\3.png)
+![前10职位排名](corepom\src\main\resources\img\3.png)
 
 	8) 全国/各省的前10位公司行业排名。
 	9) 全国/各省的前10位公司性质排名。
 	
 	10) 全国/各省的各学历的职位数量。
 	11) 全国/各省的各经验要求的职位数量。
-![数量分布](img\4.png)
+![数量分布](corepom\src\main\resources\img\4.png)
 
 	12) 全国/各省的学历-经验-工资对应关系。
-![学历-经验-工资对应关系](img\6.png)
+![学历-经验-工资对应关系](corepom\src\main\resources\img\6.png)
 
 	13) 全国/各省的学历-经验-工资-职位对应关系。
-![学历-经验-工资-职位对应关系](img\7.png)
+![学历-经验-工资-职位对应关系](corepom\src\main\resources\img\7.png)
 
 
 
