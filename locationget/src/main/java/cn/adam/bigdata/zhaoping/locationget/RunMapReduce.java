@@ -10,12 +10,12 @@ public class RunMapReduce {
     public static void main(String[] args) {
         DefaultRunjob conf = conf();
         conf.addConf(ReducerDemo.LOCATIONFILEPATH, "hdfs:/drsn/rjb/input/lfromlocation.txt");
-        conf.runForLocal();
+        conf.runServer();
 
         conf.addConf(ReducerDemo.LOCATIONFILEPATH, "hdfs:/drsn/rjb/input/lfromcname.txt");
         conf.addConf(ReducerDemo.LOCATIONDROM, "cname");
         conf.setInputFileName("jafinally.csv");
-        conf.runForLocal();
+        conf.runServer();
     }
 
     public static DefaultRunjob conf(){

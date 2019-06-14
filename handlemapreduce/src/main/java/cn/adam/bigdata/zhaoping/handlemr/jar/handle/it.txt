@@ -15,7 +15,7 @@ PyTorch	pytorch
 LLVM	llvm
 Docker	docker
 FreeRTOS	freertos
-图像处理	图像处理
+图像处理技术	图像处理
 MySQL	mysql
 Verilog	verilog
 Pinterest	pinterest
@@ -51,9 +51,9 @@ R	r
 NoSQL	nosql
 RDF	rdf
 Boost	boost
-人工智能	人工智能
+人工智能技术	人工智能
 Tornado	tornado
-数据挖掘	ssas=data mining=text mining=数据挖掘
+数据挖掘技术	ssas=data mining=text mining=数据挖掘
 Clustering算法	clustering
 TensorFlow	tensorflow=tensoflow=tensor flow
 维特比算法	维特比算法=viterbi
@@ -129,7 +129,7 @@ WebRTC	webrtc
 v-SLAM	v-slam=v slam=vslam
 FineReport	finereport
 Tomcat	tomcat
-计算机视觉	机器视觉=computer vision
+计算机视觉技术	机器视觉=computer vision
 OpenStack	openstack
 JSON	json
 Spark MLlib	mllib=sparkmllib=spark mllib=mlib=spark ml
@@ -143,7 +143,7 @@ Mathematica	mathematica
 ANSYS	ansys
 Adobe After Effects	ae
 Oracle	orcale=oralce
-人脸识别	人脸识别
+人脸识别技术	人脸识别
 Adaboost	adaboost
 Streaming	streaming
 C++	c++=c+
@@ -188,7 +188,7 @@ IO	io
 Eviews	eviews
 CMS	cms
 TOF	tof
-决策树	决策树
+决策树算法	决策树
 CNC	cnc
 Axure RP	axure rp=axurerp=axure
 Swift	swift
@@ -204,7 +204,7 @@ VTK	vtk
 ParameterServer	parameter server
 EtherCAT	ethercat
 SCARA	scara
-数据分析	数据分析
+数据分析技术	数据分析
 Phm	phm
 RDBMS	rdbms
 WFST	wfst
@@ -218,7 +218,7 @@ Adams	adams
 Sass	sass
 PLSA	plsa
 RabbitMQ	mq=rabbitmq
-Adobe Illustrator	ai=illustrator
+Adobe Illustrator	illustrator
 Sphinx	sphinx
 OpenCV	opencv
 Django	django
@@ -306,7 +306,7 @@ ORB-SLAM	orb-slam=orbslam=orb slam
 Apache Mahout	mahout
 GoogLeNet	googlenet
 HTML5	html5
-自然语言	自然语言
+自然语言处理技术	自然语言
 LAMP	lamp
 Microsoft Excel	excel=execl=excle
 MyEclipse	myeclipse
@@ -325,7 +325,7 @@ BSP	bsp
 GMapping	gmapping
 Cookie	cookie
 POC	poc
-深度学习	deeplearning=深度学习
+深度学习技术	deeplearning=深度学习
 GlusterFS	glusterfs
 Dubbo	dubbo
 Flume	flume
@@ -339,12 +339,12 @@ Logistic regression	logistic regression
 Presto	presto
 DeepMind	deepmind
 RSS	rss
-建模分析	建模分析
+建模分析技术	建模分析
 Stateflow	stateflow
 Struts	struts
 Linux C	linux c
 CVR	cvr
-大数据	大数据
+大数据技术	大数据
 Bluetooth	bluetooth
 Qt	qt
 SVG	svg
@@ -386,7 +386,7 @@ HiveSql	hive sql
 LNMP	lnmp
 RSA算法	rsa
 Web service	webservice=web service
-目标检测	目标检测
+目标检测技术	目标检测
 ReID	reid
 Dreamweaver	dreamweaver
 GBDT	gbdt
@@ -396,7 +396,7 @@ TensorRT	tensorrt
 MapReduce	mapreduce
 IDL	idl
 VHDL	vhdl
-机器学习	机器学习=machine learning
+机器学习技术	机器学习=machine learning
 .NET	.net
 Gabor	gabor
 Learning to Rank算法	learningtorank
@@ -405,7 +405,7 @@ Attention	attention
 优化算法	优化算法
 Boosting	boosting
 TalkingData	talkingdata
-语音识别	语音识别
+语音识别技术	语音识别
 HCI	hci
 CSS3	css3
 ECharts	echarts
@@ -494,7 +494,7 @@ AI lab	ai lab
 JMP	jmp
 RocketMQ	rocketmq
 Pipeline	pipeline
-人脸检测	人脸检测
+人脸检测技术	人脸检测
 WebLogic	weblogic
 ZooKeeper	zookeeper
 GraphX	graphx
@@ -522,14 +522,14 @@ LoadRunner	loadrunner
 LSA	lsa
 Assembly	assembly
 Python	python=phython=pyhton
-数学建模	数学建模
+数学建模技术	数学建模
 SVO算法	svo
 贝叶斯分类算法	bayesian=贝叶斯
 CAD	cad
 OpenGL ES	opengl es
 SSIS	ssis
 CAM	cam
-信号处理	信号信息处理=信号处理
+信号处理技术	信号信息处理=信号处理
 R-FCN	r-fcn
 GIS	gis
 Vue.js	vuejs

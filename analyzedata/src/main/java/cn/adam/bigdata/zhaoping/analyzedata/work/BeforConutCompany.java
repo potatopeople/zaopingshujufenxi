@@ -16,7 +16,7 @@ import java.io.IOException;
 public class BeforConutCompany extends DefaultRunjob {
     public static void main(String[] args) {
         DefaultRunjob conf = conf();
-        conf.runForLocal();
+        conf.runServer();
     }
     public static DefaultRunjob conf(){
         BeforConutCompany defaultRunjob = new BeforConutCompany();

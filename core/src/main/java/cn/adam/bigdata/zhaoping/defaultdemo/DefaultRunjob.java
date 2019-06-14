@@ -72,6 +72,11 @@ public class DefaultRunjob {
 		this.addConf(JAR, jarPath);
 		run();
 	}
+	public void runServer(){
+		this.addConfClass(CSVFormats.class);
+		this.checkConf();
+		run();
+	}
 	public void runForLocal(){
 		this.checkConf();
 		this.confClass.clear();

@@ -3,4 +3,4 @@ server:
 
 hbase:
   zookeeper:
-    quorum: slave1
+    quorum: slave1,slave2,slave3

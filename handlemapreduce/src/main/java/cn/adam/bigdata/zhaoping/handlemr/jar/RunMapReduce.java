@@ -13,7 +13,7 @@ import org.apache.hadoop.mapreduce.Job;
 
 public class RunMapReduce extends DefaultRunjob{
     public static void main(String[] args) {
-        conf().runForLocal();
+        conf().runServer();
     }
 
     public static DefaultRunjob conf(){

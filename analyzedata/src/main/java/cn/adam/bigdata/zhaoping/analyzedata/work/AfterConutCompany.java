@@ -18,7 +18,7 @@ import java.util.List;
 public class AfterConutCompany extends DefaultRunjob {
     public static void main(String[] args) {
         DefaultRunjob conf = conf();
-        conf.runForLocal();
+        conf.runServer();
     }
     public static DefaultRunjob conf(){
         AfterConutCompany defaultRunjob = new AfterConutCompany();
