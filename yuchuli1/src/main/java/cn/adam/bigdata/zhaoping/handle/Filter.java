@@ -18,8 +18,14 @@ public class Filter implements Handle<List<String>> {
         }
     }
 
+    /**
+     * 去除字段中多余空白符（空格，换行，制表符等）
+     * @param s 字段字符串
+     * @param is 指定是消除所有空白符还是，消除多余空白符
+     * @return 返回处理后的字符串
+     */
     private String work(String s, boolean is) {
         return s.replaceAll(FieldMatch.EMPTY, is ? "" : " ")
-                .replaceAll("(^ | $)", "");
+                .replaceAll("(^\\s+|\\s+$)", "");
     }
 }

@@ -16,9 +16,10 @@ public class HbaseUtils {
     private Admin admin;
     private Connection connection;
 
-    private HbaseUtils() {
+    private HbaseUtils(String s) {
         Configuration configuration = HBaseConfiguration.create();
-        configuration.set("hbase.zookeeper.quorum", "slave1");
+//        configuration.set("hbase.zookeeper.quorum", "slave1");
+        configuration.set("hbase.zookeeper.quorum", s);
 
         try {
             connection = ConnectionFactory.createConnection(configuration);
@@ -175,9 +176,9 @@ public class HbaseUtils {
 
     }
 
-    public static HbaseUtils getInstance() {
+    public static HbaseUtils getInstance(String s) {
         if (hbase == null)
-            hbase = new HbaseUtils();
+            hbase = new HbaseUtils(s);
 
         return hbase;
     }

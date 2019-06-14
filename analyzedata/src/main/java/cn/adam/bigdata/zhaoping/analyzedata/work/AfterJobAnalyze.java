@@ -62,7 +62,6 @@ public class AfterJobAnalyze extends DefaultRunjob{
 
     static class AfterAnalyzReducer extends DefaultReducer<Text, Text, Text, NullWritable>{
 //        private MultipleOutputs<Text, NullWritable> outputs;
-//        private HbaseUtils hbase;
         @Override
         protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
             String[] vs = key.toString().split("\t",-1);
@@ -86,12 +85,10 @@ public class AfterJobAnalyze extends DefaultRunjob{
 
                 String json = JSONObject.toJSONString(l);
 
-//                hbase.put("job", vs[1], "rank", "jobtag", json);
                 out = vs[1]+"\trank\tjobtag\t"+json;
 //                outputs.write(new Text(out), NullWritable.get(), "jobtag");
                 context.write(new Text(out), NullWritable.get());
                 if (all != null) {
-//                    hbase.put("job", vs[1], "count", "jobtag", all);
                     out = vs[1]+"\tcount\tjobtag\t"+all;
 //                    outputs.write(new Text(out), NullWritable.get(), "jobtag");
                     context.write(new Text(out), NullWritable.get());
@@ -106,7 +103,6 @@ public class AfterJobAnalyze extends DefaultRunjob{
 
                 String json = JSONObject.toJSONString(l);
 
-//                hbase.put("job", vs[1], "radarchart", "edu", json);
                 out = vs[1]+"\tradarchart\tedu\t"+json;
 //                outputs.write(new Text(out), NullWritable.get(), "edu");
                 context.write(new Text(out), NullWritable.get());
@@ -121,7 +117,6 @@ public class AfterJobAnalyze extends DefaultRunjob{
 
                 String json = JSONObject.toJSONString(l);
 
-//                hbase.put("job", vs[1], "radarchart", "exp", json);
                 out = vs[1]+"\tradarchart\texp\t"+json;
 //                outputs.write(new Text(out), NullWritable.get(), "exp");
                 context.write(new Text(out), NullWritable.get());
@@ -137,7 +132,6 @@ public class AfterJobAnalyze extends DefaultRunjob{
 
                 String json = JSONObject.toJSONString(l);
 
-//                hbase.put("job", vs[1], "scatterplot", "ees", json);
                 out = vs[1]+"\tscatterplot\tees\t"+json;
 //                outputs.write(new Text(out), NullWritable.get(), "sandiantu");
                 context.write(new Text(out), NullWritable.get());
@@ -153,7 +147,6 @@ public class AfterJobAnalyze extends DefaultRunjob{
 
                 String json = JSONObject.toJSONString(l);
 
-//                hbase.put("job", vs[1], "scatterplot", "eesj", json);
                 out = vs[1]+"\tscatterplot\teesj\t"+json;
 //                outputs.write(new Text(out), NullWritable.get(), "sandiantu2");
                 context.write(new Text(out), NullWritable.get());
@@ -176,10 +169,8 @@ public class AfterJobAnalyze extends DefaultRunjob{
 
                 if (vs[2].equals("ALL"))
                     out = vs[1]+"\trank\tinfo\t"+json;
-//                   hbase.put("job", vs[1], "rank", "info", json);
                 else
                     out = vs[1]+"\tinfo\t"+vs[2]+"\t"+json;
-//                    hbase.put("job", vs[1], "info", vs[2], json);
 //                outputs.write(new Text(out), NullWritable.get(), "info");
                 context.write(new Text(out), NullWritable.get());
             }else if (vs[0].equals("welfare")){
@@ -199,10 +190,6 @@ public class AfterJobAnalyze extends DefaultRunjob{
 
                 String json = JSONObject.toJSONString(l);
 
-//                if (vs[2].equals("ALL"))
-//                    hbase.put("job", vs[1], "rank", "welfare", json);
-//                else
-//                    hbase.put("job", vs[1], "welfare", vs[2], json);
                 if (vs[2].equals("ALL"))
                     out = vs[1]+"\trank\twelfare\t"+json;
                 else
@@ -216,17 +203,12 @@ public class AfterJobAnalyze extends DefaultRunjob{
         protected void setup(Context context) throws IOException, InterruptedException {
             super.setup(context);
 //            outputs = new MultipleOutputs<>(context);
-//            hbase = HbaseUtils.getInstance();
-//            if (!hbase.tableExists("job"))
-//                hbase.tableCreate("job", false, "count",
-//                        "rank", "radarchart", "scatterplot", "info", "welfare");
         }
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
             super.cleanup(context);
 //            outputs.close();
-//            hbase.close();
         }
     }
 }

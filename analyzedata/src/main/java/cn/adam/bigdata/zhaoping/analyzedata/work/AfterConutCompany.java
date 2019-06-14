@@ -58,7 +58,6 @@ public class AfterConutCompany extends DefaultRunjob {
     static class AfterConutCompanyReducer extends DefaultReducer<Text, Text, Text, NullWritable>{
 
 //        private MultipleOutputs<Text, NullWritable> outputs;
-//        private HbaseUtils hbase;
         @Override
         protected void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
             String[] vs = key.toString().split("\t",-1);
@@ -68,7 +67,6 @@ public class AfterConutCompany extends DefaultRunjob {
                     String[] ts = t.toString().split("\t",-1);
                     int i = Integer.parseInt(ts[2]);
 
-//                    hbase.put("job", ts[1], "count", "company", i);
                     out = ts[1] + "\tcount\tcompany\t"+i;
                     context.write(new Text(out), NullWritable.get());
 //                    outputs.write(new Text(out), NullWritable.get(), "company");
@@ -87,7 +85,6 @@ public class AfterConutCompany extends DefaultRunjob {
 
                 String json = JSONObject.toJSONString(l);
 
-//                hbase.put("job", vs[1], "rank", "nature", json);
                 out = vs[1] + "\trank\tnature\t"+json;
                 context.write(new Text(out), NullWritable.get());
 //                outputs.write(new Text(out), NullWritable.get(), "nature");
@@ -105,7 +102,6 @@ public class AfterConutCompany extends DefaultRunjob {
 
                 String json = JSONObject.toJSONString(l);
 
-//                hbase.put("job", vs[1], "rank", "industry", json);
                 out = vs[1] + "\trank\tindustry\t"+json;
                 context.write(new Text(out), NullWritable.get());
 //                outputs.write(new Text(out), NullWritable.get(), "industry");
@@ -116,17 +112,12 @@ public class AfterConutCompany extends DefaultRunjob {
         protected void setup(Context context) throws IOException, InterruptedException {
             super.setup(context);
 //            outputs = new MultipleOutputs<>(context);
-//            hbase = HbaseUtils.getInstance();
-//            if (!hbase.tableExists("job"))
-//                hbase.tableCreate("job", false, "count",
-//                        "rank", "radarchart", "scatterplot", "info", "welfare");
         }
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
             super.cleanup(context);
 //            outputs.close();
-//            hbase.close();
         }
     }
 

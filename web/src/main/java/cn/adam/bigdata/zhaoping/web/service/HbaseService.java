@@ -3,6 +3,8 @@ package cn.adam.bigdata.zhaoping.web.service;
 import cn.adam.bigdata.zhaoping.web.entity.CountValuve;
 import cn.adam.bigdata.zhaoping.web.entity.KValuve;
 import cn.adam.bigdata.zhaoping.web.util.HbaseUtils;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.CellUtil;
@@ -11,6 +13,7 @@ import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -21,6 +24,9 @@ import java.util.List;
 @Service
 @Slf4j
 public class HbaseService {
+    @Value("${hbase.zookeeper.quorum}")
+    @Getter@Setter
+    private String hbaseserver;
     HbaseUtils hbase;
     ObjectMapper mapper = new ObjectMapper();
     public List<CountValuve> getCount(String n){
@@ -76,7 +82,7 @@ public class HbaseService {
 
     @PostConstruct
     public void init(){
-        hbase = HbaseUtils.getInstance();
+        hbase = HbaseUtils.getInstance(hbaseserver);
         log.info("初始化!");
     }
     @PreDestroy

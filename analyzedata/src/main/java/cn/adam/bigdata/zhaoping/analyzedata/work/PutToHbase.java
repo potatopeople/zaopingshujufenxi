@@ -13,6 +13,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 public class PutToHbase extends DefaultRunjob {
     public static void main(String[] args) {
@@ -24,7 +25,9 @@ public class PutToHbase extends DefaultRunjob {
 
         defaultRunjob.setCacheDir("hdfs:/drsn/rjb/conf/");
 //        defaultRunjob.addConfClass(CSVFormats.class);
-        defaultRunjob.addConf("hbase.zookeeper.quorum", "slave1");
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入 hbase.zookeeper.quorum 的值：");
+        defaultRunjob.addConf("hbase.zookeeper.quorum", sc.nextLine());
         defaultRunjob.addConf(TableOutputFormat.OUTPUT_TABLE, "job");
         defaultRunjob.addConf("dfs.socket.timeout", "180000");
         defaultRunjob.setRunClass(PutToHbase.class);
