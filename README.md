@@ -1,29 +1,33 @@
 # 项目说明文档
 
-
+> 注：前端项目github地址：https://github.com/potatopeople/rjb
 
 ## 1 使用技术或框架：
 
-	大数据相关：hdfs, mapreduce, hbase, 
-	工具，框架相关：ansj（分词），commons-csv（csv数据解析）， fastjson（json数据解析），jsoup（解析地址信息时调用api用到）
-	可视化：后端采用的springboot调用hbase api编写的数据接口，前端采用的vue.js和echarts进行可视化
-	开发环境：除环境搭建文档中提及到的大数据环境外，还有idea，webstom开发工具，maven，jdk1.8等
+```
+开发语言：java，javascript，html/css，
+大数据相关：hdfs, mapreduce, hbase, 
+工具，框架相关：ansj（分词），commons-csv（csv数据解析）， fastjson（json数据解析），jsoup（解析地址信息时调用api用到），springbooot（javaweb框架），echarts（可视化库），vue（构建用户界面的框架）
+使用软件/工具：idea，webstom，maven，visual studio code
+```
 
 ## 2 思路和实现流程
 
 ### 2.1整体思路
 
-	1), 先编写java程序（项目：yuchuli1）对源数据的空行，多行，多空白字符，进行消除，对字段位置错误（如公司人数）进行修正，
-	2), 再编写mapreduce程序（项目：handlemapreduce）对缺少的字段尝试修复，将需要用到的字段处理成易于分析的格式（包括分词处理），根据塞题要求过滤数据，并去除重复数据
-	3), 然后编写java程序（项目：locationget）调用腾讯地图高德地图api进行地理位置解析，并编写mapreduce程序将解析后的地址信息融入源数据
-	4), 最后，编写mapreduce程序（项目：analyzedata）进行数据分析
-	5), 然后编写后端接口，编写前端可视化
+```
+1), 先编写java程序（项目：yuchuli1）对源数据的空行，多行，多空白字符，进行消除，对字段位置错误（如公司人数）进行修正，
+2), 再编写mapreduce程序（项目：handlemapreduce）对缺少的字段尝试修复，将需要用到的字段处理成易于分析的格式（包括分词处理），根据塞题要求过滤数据，并去除重复数据
+3), 然后编写java程序（项目：locationget）调用腾讯地图高德地图api进行地理位置解析，并编写mapreduce程序将解析后的地址信息融入源数据
+4), 最后，编写mapreduce程序（项目：analyzedata）进行数据分析
+5), 然后编写后端接口，编写前端可视化
+```
 
 ### 2.2 分步思路与实现流程
+
 #### 2.2.1 数据收集,预处理（yuchuli1）
 
 ```Java
-
 用commons-csv对源数据6个文件分别进行加载，然后去掉每个字段中的空行，换行，多余空白符，再检测公司人数字段是否位置正确，尝试去其他字段找，
 
 处理完成后， 将数据输出到同一个文件（out/ja.csv）中，文件大小在407mb左右，然后将文件上传到hdfs:/drsn/rjb/input/ja.csv中(文件名: ja.csv)
@@ -84,11 +88,12 @@ private String work(String s, boolean is) {
 /*
     由于该部分核心代码太多，可查看源代码，handlemapreduce项目下cn.adam.bigdata.zhaoping.handlemr.jar.handle包内的所有用于字段处理的handle
     
-    对人数，学历，经验，工资进行了处理，处理成了固定格式，如，人数，经验，工资处理成数值-数值，学历处理成，不限，初中，中专，高中，大专，本科，硕士，博士，其他这几个，
+    对人数，学历，经验，工资进行了处理，处理成了固定格式，如，人数，经验，工资处理成数值-数值，0-8表示8以下，8-0表示8以上，学历处理成，不限，初中，中专，高中，大专，本科，硕士，博士，其他这几个，
     对同个公司的信息：公司融资阶段，公司行业，公司地址，公司名字，公司描述，公司性质进行对比选择最全的进行同步更新，
     将job_info，job_name数据为空或值为null的数据过滤掉，无效数据过滤，将job_name中包含“实习”的数据过滤掉。
     去除重复数据：判断依据：公司名company_name，公司地址company_location，公司概况company_overview，职位名job_name， 职位描述job_info，这些字段是否全部相同
-    对职位描述和职位福利进行分词（白名单，词库收集来源于网络），
+    
+    * 对职位描述和职位福利进行分词（白名单筛选，），词库收集来源于网络，结合THUOCL:清华大学开放中文词库 - IT类和源数据分词结果较高词频的部分词建立而成，算上同等意义的词的话词量大约在700个词左右
 */
 ```
 
@@ -139,7 +144,6 @@ protected void reduce(Text key, Iterable<JobWritable> values,
 
 #### 2.2.4 数据分析（analyzedata）
 
-
 ```Java
 对于数据分析，我是在地区字段之上进行的各种分析，目前只写了省级，准备第二轮再根据实际效果决定要不要写市级，其中，全国的数据等同于所有数据，没有地区信息的数据我将其依然归于全国，但不归于任何省，所有数据中，没有地区信息的数据为10%
 分析数据主要分析了：
@@ -184,7 +188,9 @@ welfare列族（各职位职位福利排名）：各职位名
 ```
 
 #### 2.2.5 数据可视化（web）
+
 ##### 2.2.5.1 可视化后端
+
 ```Java
 	采用springboot框架，通过hbase api编写后端数据接口，提供数据分析时的13项数据的接口，返回json数据
 	
@@ -257,40 +263,62 @@ public class DefaultController {
 
 ##### 2.2.5.2 可视化前端
 
-	采用vue，echarts框架进行前端可视化界面开发
-	调用后端提供的数据接口，然后将其用echarts展示出来
-	
-	界面：
-	总体界面：
+```
+采用vue，echarts框架进行前端可视化界面开发
+调用后端提供的数据接口，然后将其用echarts展示出来
 
-![1560469784203](corepom/src/main/resources/img/1560469784203.png)
+界面：
+总体界面：
+```
+
+![1560469784203](img\1560469784203.png)
 	1) 各省的公司数量分布。
 	2) 各省发布的职位数量分布。
-![1560459838972](corepom/src/main/resources/img/1560459838972.png)
+![1560459838972](img\1560459838972.png)
 	3) 全国的各职位所需掌握的前10位技能点排名。
 	4) 全国/各省的各职位的前10位职位福利排名。
-![前10技能点/福利排名](corepom/src/main/resources/img/1.png)
-![前10技能点/福利关系](corepom/src/main/resources/img/5.png)
+![前10技能点/福利排名](img\1.png)
+![前10技能点/福利关系](img\5.png)
 
-	5) 全国/各省的所有职位的前20技能点排名。
-![前20技能点排名](corepom/src/main/resources/img/2.png)
+```
+5) 全国/各省的所有职位的前20技能点排名。
 
-	6) 全国/各省的所有职位的前20位职位福利排名。
-	7) 全国/各省的前10位职位排名。
-![前10职位排名](corepom/src/main/resources/img/3.png)
+```
 
-	8) 全国/各省的前10位公司行业排名。
-	9) 全国/各省的前10位公司性质排名。
-	
-	10) 全国/各省的各学历的职位数量。
-	11) 全国/各省的各经验要求的职位数量。
-![数量分布](corepom/src/main/resources/img/4.png)
+![前20技能点排名](img\2.png)
 
-	12) 全国/各省的学历-经验-工资对应关系。
-![学历-经验-工资对应关系](corepom/src/main/resources/img/6.png)
+```
+6) 全国/各省的所有职位的前20位职位福利排名。
+7) 全国/各省的前10位职位排名。
 
-	13) 全国/各省的学历-经验-工资-职位对应关系。
-![学历-经验-工资-职位对应关系](corepom/src/main/resources/img/7.png)
+```
+
+![前10职位排名](img\3.png)
+
+```
+8) 全国/各省的前10位公司行业排名。
+9) 全国/各省的前10位公司性质排名。
+
+10) 全国/各省的各学历的职位数量。
+11) 全国/各省的各经验要求的职位数量。
+
+```
+
+![数量分布](img\4.png)
+
+```
+12) 全国/各省的学历-经验-工资对应关系。
+
+```
+
+![学历-经验-工资对应关系](img\6.png)
+
+```
+13) 全国/各省的学历-经验-工资-职位对应关系。
+
+```
+
+![学历-经验-工资-职位对应关系](img\7.png)
 
 
 
@@ -298,33 +326,48 @@ public class DefaultController {
 
 ### 3.1 地图可视化结果
 
-	由地图展示的各地区职位和公司分布情况来看，排名靠前的省份为广东，北京，上海，浙江，江苏，四川；由此可知，取这些地方发展，机遇会大很多；
+```
+由地图展示的各地区职位和公司分布情况来看，排名靠前的省份为广东，北京，上海，浙江，江苏，四川；由此可知，取这些地方发展，机遇会大很多；
+
+```
 
 ### 3.2 各职位技能点/职位福利排名
 
-		人工智能职位需要的最主要的技能点：人工智能，大数据，c，python，java，c++等；	职位福利为：五险一金，绩效奖金，带薪年假等
-		图像处理职位需要的最主要的技能点：图像处理，c++，c，深度学习，机器学习，python，openCV，TensorFlow等	职位福利为：五险一金，带薪年假，弹性工作等
-		图像算法职位需要的最主要的技能点：c++，图像处理，深度学习，c，python，机器学习，openCV，TensorFlow等	职位福利为：五险一金，带薪年假，弹性工作等
-		数据分析职位需要的最主要的技能点：数据分析，Excel，MSOffice，ppt，SEO，大数据，SEM等	职位福利为：五险一金，绩效奖金，专业培训等
-		数据分析师职位需要的最主要的技能点：数据分析，Excel，python，R，数据挖掘，大数据，SPSS等	职位福利为：五险一金，节日福利，带薪年假等
-		数据挖掘职位需要的最主要的技能点：数据挖掘，数据分析，大数据，python，java，hadoop，机器学习，spark等	职位福利为：五险一金，绩效奖金，带薪年假等
-		算法职位需要的最主要的技能点：c++，c，python，MATLAB，机器学习，图像处理，深度学习等	职位福利为：五险一金，绩效奖金，定期体检等
-	......
-	
-		求职者可参考这些数据，综合自身条件和需要进行职位的选择；
+```
+	人工智能职位需要的最主要的技能点：人工智能，大数据，c，python，java，c++等；	职位福利为：五险一金，绩效奖金，带薪年假等
+	图像处理职位需要的最主要的技能点：图像处理，c++，c，深度学习，机器学习，python，openCV，TensorFlow等	职位福利为：五险一金，带薪年假，弹性工作等
+	图像算法职位需要的最主要的技能点：c++，图像处理，深度学习，c，python，机器学习，openCV，TensorFlow等	职位福利为：五险一金，带薪年假，弹性工作等
+	数据分析职位需要的最主要的技能点：数据分析，Excel，MSOffice，ppt，SEO，大数据，SEM等	职位福利为：五险一金，绩效奖金，专业培训等
+	数据分析师职位需要的最主要的技能点：数据分析，Excel，python，R，数据挖掘，大数据，SPSS等	职位福利为：五险一金，节日福利，带薪年假等
+	数据挖掘职位需要的最主要的技能点：数据挖掘，数据分析，大数据，python，java，hadoop，机器学习，spark等	职位福利为：五险一金，绩效奖金，带薪年假等
+	算法职位需要的最主要的技能点：c++，c，python，MATLAB，机器学习，图像处理，深度学习等	职位福利为：五险一金，绩效奖金，定期体检等
+......
+
+	求职者可参考这些数据，综合自身条件和需要进行职位的选择；
+
+```
 
 ### 3.3 各职位排名
 
-	由饼图展示结果可看出，所有招聘数据中，职位需求排名靠前的为：数据分析，数据挖掘，人工智能，机器学习，深度学习，算法等
+```
+由饼图展示结果可看出，所有招聘数据中，职位需求排名靠前的为：数据分析，数据挖掘，人工智能，机器学习，深度学习，算法等
+
+```
 
 ### 3.4 各学历/经验需求分布
 
-	由雷达图可知，所有职位学历要求中，本科要求数量最多，大专其次；
-	经验要求2年以上最多，不限经验其次；
+```
+由雷达图可知，所有职位学历要求中，本科要求数量最多，大专其次；
+经验要求2年以上最多，不限经验其次；
+
+```
 
 ### 3.5 学历-经验-工资对应关系
 
-	由散点图可知，一般情况下，学历越高，经验年限越高工资也就越高
+```
+由散点图可知，一般情况下，学历越高，经验年限越高工资也就越高
+
+```
 
 其余各省的可以点击地图中对应的位置，所有图表会联动，将数据切换为当前选择省份的数据，再次点击当前选择的省会切换回全国的数据；
 
@@ -397,33 +440,36 @@ web
 		util
 			HbaseUtils.java 操作hbase api的类
 		WebApplication.java	启动springboot的类
+
 ```
 
 
 
 #### 4.2 可执行文件介绍
 
+```
 由于我提供了可执行的包，所以就不介绍源码执行了，
-
 大数据环境：我的大数据环境为一个namenode节点3个datanode节点，分别为master，slave1，slave2，slave3，
-
 zookeeper在slave1，2，3这三台机器上，hmaster在master机器上，
 
 1. 先将6份最初的数据文件放在yuchuli1包同目录下，执行run-yuchuli1.bat，会在当前目录生成一个out文件夹，里边有一个ja.csv文件，
 
 2. 将ja.csv文件上传至hdfs中，路径为：hdfs:/drsn/rjb/input/ja.csv
 
-3. hadoop运行handlemapreduce包    “hadoop -jar handlemapreduce-1.0-SNAPSHOT.jar”
+3. hadoop运行handlemapreduce包    “hadoop jar handlemapreduce-1.0-SNAPSHOT.jar”
 
-4. 将我提供的两个地址信息文件（lfromcname.txt， lfromlocation.txt）上传至hdfs，文件名不变，和ja.cav同目录；
+4. 将我提供的两个地址信息文件（lfromcname.txt， lfromlocation.txt）上传至hdfs，文件名不变，和ja.csv同目录；
 
-5. hadoop运行locationget包    “hadoop -jar locationget-1.0-SNAPSHOT.jar”
+5. hadoop运行locationget包    “hadoop jar locationget-1.0-SNAPSHOT.jar”
 
-6. hadoop运行analyzedata包    “hadoop -jar analyzedata-1.0-SNAPSHOT.jar”    注意：会提示输入hbase使用的zookeeper的服务器地址（hbase.zookeeper.quorum参数的值），运行前需要创建好hbase表
+6.创建好hbase表  `create 'job', {NAME => 'count'}, {NAME => 'info'}, {NAME => 'radarchart'}, {NAME => 'rank'}, {NAME => 'scatterplot'}, {NAME => 'welfare'}`
 
-   `create 'job', {NAME => 'count'}, {NAME => 'info'}, {NAME => 'radarchart'}, {NAME => 'rank'}, {NAME => 'scatterplot'}, {NAME => 'welfare'}`
+7. hadoop运行analyzedata包    “hadoop jar analyzedata-1.0-SNAPSHOT.jar”    注意：会提示输入hbase使用的zookeeper的服务器地址（hbase.zookeeper.quorum参数的值），
 
-7. 修改
+8. 修改web包目录下的application.yml配置文件，运行run-web.bat
+9. 浏览器访问http://127.0.0.1:你设置的端口（如未修改配置文件则为8081）
+
+```
 
 
 
